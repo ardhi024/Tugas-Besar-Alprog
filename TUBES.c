@@ -1,27 +1,162 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+#define true 1
+#define ps3 5000
+#define ps4 7000
+#define ps5 10000
+struct regis{
+	char nama;
+	char alamat;
+	char username;
+	char password;
+} r;
+void admin();
+void pelanggan();
+void ps();
+void pembayaran();
 int main(){
+	int menu;
+	printf("============================================\n");
+	printf("||      SELAMAT DATANG DI A.R.A PS        ||\n");
+	printf("============================================\n");
+	printf("|| 1. Masuk sebagai admin                 ||\n");
+	printf("|| 2. Masuk sebagai pelanggan             ||\n");
+	printf("============================================\n");
+	printf("Masukkan pilihan anda (1/2) : ");
+	scanf("%d", &menu);
+	switch(menu){
+		case 1:
+			system("cls");
+			admin();
+			break;
+		case 2:
+			system("cls");
+			pelanggan();
+			break;
+	}
+}
+void admin(){
+	char usr[5], pas[8];
+	int status = 0, salah = 0, pilih;
+	printf("============================================\n");
+	printf("||      SELAMAT DATANG DI MODE ADMIN      ||\n");
+	printf("============================================\n");
+   	while(status < 3){
+   		printf("Masukkan Username : ");
+      	scanf("%s", &usr);
+		printf("Masukkan Password : ");
+      	scanf("%s", &pas);
+      	if(strcmp(usr, "admin")==0 && strcmp (pas, "admin321")== 0){
+        	printf("Akses diterima\n");
+        	break;
+      	}else{
+			printf("Username atau Password salah\n");
+        	salah++;
+        	if(salah == 3){
+            	printf("Akses ditolak\n");
+            	system("cls");
+            	main();
+        	}
+      	}
+		status++;
+   	}
+   	printf("============================================\n");
+	printf("||     ANDA BERADA DI DALAM MODE ADMIN    ||\n");
+	printf("============================================\n");
+	printf("|| 1. Lihat daftar pelanggan              ||\n");
+	printf("|| 2. Lihat daftar registrasi             ||\n");
+	printf("|| 3. Lihat daftar game ps                ||\n");
+	printf("|| 4. Tambah game ps                      ||\n");
+	printf("============================================\n");
+	printf("Masukkan pilihan anda : ");
+	scanf("%d", &pilih);
+	if(pilih==1){
+		
+	}else if(pilih==2){
+		
+	}else if(pilih==3){
+		system("cls");
+		ps();
+	}else if(pilih==4){
+		
+	}
+	system("pause");
+}
+void pelanggan(){
+	char usr[10], pas[15];
+	int status = 0, salah = 0, pilih;
+	printf("============================================\n");
+	printf("||     SELAMAT DATANG DI MODE PELANGGAN   ||\n");
+	printf("============================================\n");
+	printf("|| 1. Registrasi                          ||\n");
+	printf("|| 2. Login                               ||\n");
+	printf("============================================\n");
+	printf("Masukkan pilihan anda : ");
+	scanf("%d", &pilih);
+	if(pilih==1){
+		printf("Masukkan nama anda :");
+		scanf("%[^\n]%*c", &r.nama);
+		printf("Masukkan alamat anda : ");
+		scanf("%[^\n]%*c", &r.alamat);
+		printf("Masukkan username anda : ");
+		scanf("%[^\n]%*c", &r.username);
+		printf("Masukkan password anda : ");
+		scanf("%[^\n]%*c", &r.password);
+		printf("Catatan : Username dan Password jangan sampai lupa!!");
+		FILE * reg;
+		reg=fopen("Registrasi_pelanggan.txt", "a");
+		fprintf(reg, "============================================\n");
+		fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
+		fprintf(reg, "============================================\n");
+		fprintf(reg, "Nama : %s\n", r.nama);
+		fprintf(reg, "Alamat : %s\n", r.alamat);
+		fprintf(reg, "Username : %s\n", r.username);
+		fprintf(reg, "Password : %s\n", r.password);
+		fprintf(reg, "============================================\n");
+		fclose(reg);
+	}if(pilih==2){
+//		reg=fopen("Registrasi_pelanggan.txt", "a");
+		printf("Masukkan Username : ");
+      	scanf("%s", &usr);
+		printf("Masukkan Password : ");
+      	scanf("%s", &pas);
+      	while(status < 3){
+	      	if(strcmp(usr, r.username)==0 && strcmp (pas, r.password)== 0){
+	        	printf("Akses diterima\n");
+	        	break;
+	      	}else{
+				printf("Username atau Password salah\n");
+	        	salah++;
+	        	if(salah == 3){
+	            	printf("Akses ditolak\n");
+	            	system("cls");
+	            	pelanggan();
+	        	}
+	      	}
+			status++;
+		}
+	}
+}
+void ps(){
 	int menu, kode;
 	char pilihan, r;
-	printf("\t\t======================================================================\t\t\n");
-	printf(" \t                            SELAMAT DATANG DI RENTAL PS KAMI                      \n");
-	printf("\t\t======================================================================\t\t\n\n");
 	printf("+================================+\n");
 	printf("|        JENIS PLAYSTATION       |\n");
 	printf("|================================|\n");
 	printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
 	printf("+================================+\n");
-	printf("Masukkan jenis PS yang ingin dirental : ");
+	printf("Masukkan jenis PS : ");
 	scanf(" %d", &menu);
 	switch(menu){
 		case 1 :
 			do{
 				system("cls");
-				printf("+======================+\n");
-				printf("|        KODE PS3      |\n");
-				printf("|======================|\n");
-				printf("|  31  |   32  |   33  |\n");
-				printf("+======================+\n");
+				printf("+==============================+\n");
+				printf("|             KODE PS3         |\n");
+				printf("|==============================|\n");
+				printf("|  31  |   32  |   33  |   34  |\n");
+				printf("+==============================+\n");
 				printf("Masukkan kode PS : ");
 				scanf("%d", &kode);
 				if(kode==31){
@@ -54,7 +189,7 @@ int main(){
 					printf("| 24. Dead Space                                         |\n");
 					printf("| 25. Naruto X Boruto Ninja Voltage                      |\n");
 					printf("+--------------------------------------------------------+\n");
-					printf("Kembali ke awal atau lanjut (n/b) : ");
+					printf("Klik b untuk kembali : ");
 					scanf(" %c", &pilihan);
 				}else if(kode==32){
 					printf("+========================================================+\n");
@@ -86,7 +221,7 @@ int main(){
 					printf("| 24. Drakengard 3                                       |\n");
 					printf("| 25. Pro Evolution Soccer (PES) 2020                    |\n");
 					printf("+--------------------------------------------------------+\n");
-					printf("Kembali ke awal atau lanjut (n/b) : ");
+					printf("Klik b untuk kembali : ");
 					scanf(" %c", &pilihan);
 				}else if(kode==33){
 					printf("+========================================================+\n");
@@ -118,8 +253,20 @@ int main(){
 					printf("| 24. Pro Evolution Soccer (PES) 2020                    |\n");
 					printf("| 25. Dynasty Warriors 8: Empires                        |\n");
 					printf("+--------------------------------------------------------+\n");
-					printf("Kembali ke awal atau lanjut (n/b) : ");
+					printf("Klik b untuk kembali : ");
 					scanf(" %c", &pilihan);
+				}else if(kode==34){
+					printf("Masukkan kode PS yang dirental (31-33): ");
+					scanf("%d", &kode);
+					if(kode==31){
+						
+					}else if(kode==32){
+						
+					}else if(kode==33){
+						
+					}else{
+						printf("Input salah!!");
+					}
 				}
 			}while(pilihan=='b');
 			break;
@@ -133,21 +280,6 @@ int main(){
 			printf("Masukkan kode PS : ");
 			scanf("%d", &kode);
 			if(kode==41){
-<<<<<<< HEAD
-				printf("|==================================================|\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|==================================================|\n");
-				printf("|--------------------------------------------------|\n");
-			}else if(kode==42){
-				printf("|==================================================|\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|--------------------------------------------------|\n");
-			}else if(kode==43){
-				printf("|==================================================|\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|==================================================|\n");
-				printf("|--------------------------------------------------|\n");
-=======
 				printf("+==================================================+\n");
 				printf("|                   Daftar Game                    |\n");
 				printf("|==================================================|\n");
@@ -162,7 +294,6 @@ int main(){
 				printf("|                   Daftar Game                    |\n");
 				printf("|==================================================|\n");
 				printf("+--------------------------------------------------+\n");
->>>>>>> d569499b7e5be408275680ff086468428673e38c
 			}
 			break;
 		case 3 :
@@ -175,21 +306,6 @@ int main(){
 			printf("Masukkan kode PS : ");
 			scanf("%d", &kode);
 			if(kode==51){
-<<<<<<< HEAD
-				printf("|==================================================|\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|==================================================|\n");
-				printf("|--------------------------------------------------|\n");
-			}else if(kode==52){
-				printf("|==================================================|\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|--------------------------------------------------|\n");
-			}else if(kode==53){
-				printf("|==================================================|\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|==================================================|\n");
-				printf("|--------------------------------------------------|\n");
-=======
 				printf("+==================================================+\n");
 				printf("|                   Daftar Game                    |\n");
 				printf("|==================================================|\n");
@@ -204,9 +320,24 @@ int main(){
 				printf("|                   Daftar Game                    |\n");
 				printf("|==================================================|\n");
 				printf("+--------------------------------------------------+\n");
->>>>>>> d569499b7e5be408275680ff086468428673e38c
 			}
 			break;
 	}
-	return 0;
+}
+void timer(){
+	
+}
+void pembayaran(){
+	int kode;
+	printf("Masukkan kode PS yang dirental (31-33): ");
+	scanf("%d", &kode);
+	if(kode==31){
+		
+	}else if(kode==32){
+		
+	}else if(kode==33){
+		
+	}else{
+		printf("Input salah!!");
+	}
 }
