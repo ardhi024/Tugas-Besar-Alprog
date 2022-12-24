@@ -1,20 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <string.h>
+#include <windows.h>
 #define true 1
 #define ps3 5000
 #define ps4 7000
 #define ps5 10000
 struct regis{
-	char nama;
-	char alamat;
-	char username;
-	char password;
+	char nama[15];
+	char alamat[20];
+	char email[50];
+	char username[100];
+	char password[100];
 } r;
+struct pelanggan{
+	char nama[30];
+	char no_hp[13];
+	char alamat[100];
+	int tanggal;
+	int bayar;
+	int kode;
+} plg;
+struct tambah{
+	int kode;
+	char nama;
+	int tambah_waktu;
+} tb;
 void admin();
 void pelanggan();
 void ps();
-void pembayaran();
+void pembayaranps3();
+void pembayaranps4();
+void pembayaranps5();
+void tambah_sewa();
+void keluar();
+void menu2();
 int main(){
 	int menu;
 	printf("============================================\n");
@@ -74,7 +95,16 @@ void admin(){
 	if(pilih==1){
 		
 	}else if(pilih==2){
-		
+		system("cls");
+		FILE *reg;
+		reg=fopen("Registrasi_pelanggan.txt", "r");
+		char buffer[1000];
+		while(fgets(buffer, sizeof(buffer), reg)){
+			printf("%s\n", buffer);
+		}
+		fclose(reg);
+		system("pause");
+		admin();
 	}else if(pilih==3){
 		system("cls");
 		ps();
@@ -84,8 +114,8 @@ void admin(){
 	system("pause");
 }
 void pelanggan(){
-	char usr[10], pas[15];
-	int status = 0, salah = 0, pilih;
+	char user[100], pass[100];
+	int i, pilih;
 	printf("============================================\n");
 	printf("||     SELAMAT DATANG DI MODE PELANGGAN   ||\n");
 	printf("============================================\n");
@@ -95,49 +125,92 @@ void pelanggan(){
 	printf("Masukkan pilihan anda : ");
 	scanf("%d", &pilih);
 	if(pilih==1){
-		printf("Masukkan nama anda :");
-		scanf("%[^\n]%*c", &r.nama);
-		printf("Masukkan alamat anda : ");
-		scanf("%[^\n]%*c", &r.alamat);
-		printf("Masukkan username anda : ");
-		scanf("%[^\n]%*c", &r.username);
-		printf("Masukkan password anda : ");
-		scanf("%[^\n]%*c", &r.password);
-		printf("Catatan : Username dan Password jangan sampai lupa!!");
 		FILE * reg;
 		reg=fopen("Registrasi_pelanggan.txt", "a");
+		printf("Masukkan nama anda :");
+		scanf(" %s", &r.nama);
+		printf("Masukkan alamat anda : ");
+		scanf(" %s", &r.alamat);
+		printf("Masukkan username anda : ");
+		scanf(" %s", &r.username);
+		printf("Masukkan password anda : ");
+		scanf(" %s", &r.password);
+		printf("Akun berhasil dibuat\n");
+		printf("Catatan : Username dan Password jangan sampai lupa!!\n");
 		fprintf(reg, "============================================\n");
 		fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
 		fprintf(reg, "============================================\n");
-		fprintf(reg, "Nama : %s\n", r.nama);
-		fprintf(reg, "Alamat : %s\n", r.alamat);
-		fprintf(reg, "Username : %s\n", r.username);
-		fprintf(reg, "Password : %s\n", r.password);
+		fprintf(reg, "|| Nama     : %-27s ||\n", r.nama);
+		fprintf(reg, "|| Alamat   : %-27s ||\n", r.alamat);
+		fprintf(reg, "|| Username : %-27s ||\n", r.username);
+		fprintf(reg, "|| Password : %-27s ||\n", r.password);
 		fprintf(reg, "============================================\n");
 		fclose(reg);
+		printf("Klik apapun untuk melanjutkan program\n");
+		getch();
+		pelanggan();
 	}if(pilih==2){
-//		reg=fopen("Registrasi_pelanggan.txt", "a");
+		FILE *reg;
+		reg=fopen("Registrasi_pelanggan.txt", "r");
 		printf("Masukkan Username : ");
-      	scanf("%s", &usr);
+      	scanf("%s", &user);
 		printf("Masukkan Password : ");
-      	scanf("%s", &pas);
-      	while(status < 3){
-	      	if(strcmp(usr, r.username)==0 && strcmp (pas, r.password)== 0){
-	        	printf("Akses diterima\n");
-	        	break;
-	      	}else{
-				printf("Username atau Password salah\n");
-	        	salah++;
-	        	if(salah == 3){
-	            	printf("Akses ditolak\n");
-	            	system("cls");
-	            	pelanggan();
-	        	}
-	      	}
-			status++;
+      	scanf("%s", &pass);
+      	fscanf(reg,"%s",r.username); 
+      	fscanf(reg,"%s",r.password); 
+		while(fread(&r,sizeof(struct regis),1,reg)){
+			if(strcmp(r.username,user)){
+				if(strcmp(r.password,pass)){
+				i=1;
+			}
+				if(i==1){
+					printf("\nberhasil masuk \n");
+					printf("Silakan klik apapun untuk melanjutkan program\n");
+					getch();
+					menu2();
+					exit(0);
+				}else{
+					printf("\n___________________________________");
+					printf("\n data tidak dapat ditemukan");
+					printf("\n silahkan registrasi terlebih dahulu");
+					getch();
+				}
+			fclose(reg);
+			}
 		}
 	}
 }
+
+void menu2(){
+	int pilih;
+	printf("============================================\n");
+	printf("||     ANDA BERADA DI MODE PELANGGAN      ||\n");
+	printf("============================================\n");
+	printf("|| 1. Lihat Daftar Game                   ||\n");
+	printf("|| 2. Rental PS                           ||\n");
+	printf("============================================\n");
+	printf("Masukkan piliham anda : ");
+	scanf("%d",&pilih);
+	if(pilih==1){
+		ps();
+	}else if(pilih==2){
+		printf("+================================+\n");
+		printf("|        JENIS PLAYSTATION       |\n");
+		printf("|================================|\n");
+		printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
+		printf("+================================+\n");
+		printf("Masukkan jenis PS : ");
+		scanf(" %d", &pilih);	
+		if(pilih==1){
+			pembayaranps3();
+		}else if(pilih==2){
+			pembayaranps4();
+		}else if(pilih==3){
+			pembayaranps5();
+		}
+	}
+}
+	
 void ps(){
 	int menu, kode;
 	char pilihan, r;
@@ -152,11 +225,11 @@ void ps(){
 		case 1 :
 			do{
 				system("cls");
-				printf("+==============================+\n");
-				printf("|             KODE PS3         |\n");
-				printf("|==============================|\n");
-				printf("|  31  |   32  |   33  |   34  |\n");
-				printf("+==============================+\n");
+				printf("+======================+\n");
+				printf("|       KODE PS3       |\n");
+				printf("|======================|\n");
+				printf("|  31  |   32  |   33  |\n");
+				printf("+======================+\n");
 				printf("Masukkan kode PS : ");
 				scanf("%d", &kode);
 				if(kode==31){
@@ -255,121 +328,117 @@ void ps(){
 					printf("+--------------------------------------------------------+\n");
 					printf("Klik b untuk kembali : ");
 					scanf(" %c", &pilihan);
-				}else if(kode==34){
-					printf("Masukkan kode PS yang dirental (31-33): ");
-					scanf("%d", &kode);
-					if(kode==31){
-						
-					}else if(kode==32){
-						
-					}else if(kode==33){
-						
-					}else{
-						printf("Input salah!!");
-					}
 				}
 			}while(pilihan=='b');
 			break;
 		case 2 :
-			system("cls");
-			printf("+======================+\n");
-			printf("|        KODE PS4      |\n");
-			printf("|======================|\n");
-			printf("|  41  |   42  |   43  |\n");
-			printf("+======================+\n");
-			printf("Masukkan kode PS : ");
-			scanf("%d", &kode);
-			if(kode==41){
-				printf("+==================================================+\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|==================================================|\n");
-				printf("| 1.  Assassin's Creed Valhalla                    |\n");
-				printf("| 2.  Cyberpunk 2077                               |\n");
-				printf("| 3.  The Crew® 2                                  |\n");
-				printf("| 4.  The Sims™ 4                                  |\n");
-				printf("| 5.  EA SPORTS™ FIFA 23 Standard Edition PS4™     |\n");
-				printf("| 6.  Resident Evil Village                        |\n");
-				printf("| 7.  Horizon Zero Dawn™                           |\n");
-				printf("| 8.  The Last of Us™ Remastered                   |\n");
-				printf("| 9.  Hello Neighbor                               |\n");
-				printf("| 10. Watch Dogs: Legion                           |\n");
-				printf("| 11. Dead by Daylight                             |\n");
-				printf("| 12. God of War Ragnarök                          |\n");
-				printf("| 13. Metro Exodus                                 |\n");
-				printf("| 14. Nier: Automata                               |\n");
-				printf("| 15. Monster Hunter World                         |\n");
-				printf("| 16. Apex Legends                                 |\n");
-				printf("| 17. Yakuza 0                                     |\n");
-				printf("| 18. Tetris Effect                                |\n");
-				printf("| 19. Dreams                                       |\n");
-				printf("| 20. Final Fantasy 7 Remake                       |\n");
-				printf("| 21. Overwatch                                    |\n");
-				printf("| 22. Ratchet & Clank                              |\n");
-				printf("| 23. What Remains of Edith Finch                  |\n");
-				printf("| 24. Uncharted 4: A Thief's End                   |\n");
-				printf("| 25. Metal Gear Solid V: The Phantom Pain         |\n");
-				printf("+--------------------------------------------------+\n");
-			}else if(kode==42){
-				printf("+==================================================+\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|==================================================|\n");
-				printf("| 1.  Life is Strange                              |\n");
-				printf("| 2.  Danganronpa 1-2 Reload                       |\n");
-				printf("| 3.  Ys VIII: Lacrimosa of DANA                   |\n");
-				printf("| 4.  Tomb Raider: Definitive Edition              |\n");
-				printf("| 5.  DOOM                                         |\n");
-				printf("| 6.  428: Shibuya Scramble                        |\n");
-				printf("| 7.  Resident Evil 4                              |\n");
-				printf("| 8.  Final Fantasy XIV: Heavensward               |\n");
-				printf("| 9.  NBA 2K17                                     |\n");
-				printf("| 10. Geometry Wars 3: Dimensions                  |\n");
-				printf("| 11. Ni no Kuni II: Revenant Kingdom              |\n");
-				printf("| 12. Pillars of Eternity: Complete Edition        |\n");
-				printf("| 13. Beat Saber                                   |\n");
-				printf("| 14. Wipeout: Omega Collection                    |\n");
-				printf("| 15. Middle-earth: Shadow of Mordor               |\n");
-				printf("| 16. Apex Legends                                 |\n");
-				printf("| 17. Pro Evolution Soccer 2016                    |\n");
-				printf("| 18. Tetris Effect                                |\n");
-				printf("| 19. Dreams                                       |\n");
-				printf("| 20. Rogue Legacy                                 |\n");
-				printf("| 21. Overwatch                                    |\n");
-				printf("| 22. Valkyria Chronicles Remastered               |\n");
-				printf("| 23. What Remains of Edith Finch                  |\n");
-				printf("| 24. Street Fighter V: Arcade Edition             |\n");
-				printf("| 25. Bloodborne: The Old Hunters                  |\n");
-				printf("+--------------------------------------------------+\n");
-			}else if(kode==43){
-				printf("+==================================================+\n");
-				printf("|                   Daftar Game                    |\n");
-				printf("|==================================================|\n");
-				printf("| 1.  Resident Evil 7: biohazard                   |\n");
-				printf("| 2.  Dishonored 2                                 |\n");
-				printf("| 3.  Devil May Cry 5                              |\n");
-				printf("| 4.  Dark Souls II: Scholar of the First Sin      |\n");
-				printf("| 5.  DOOM                                         |\n");
-				printf("| 6.  F1 2017                                      |\n");
-				printf("| 7.  Resident Evil 4                              |\n");
-				printf("| 8.  Wolfenstein II: The New Colossus             |\n");
-				printf("| 9.  NBA 2K17                                     |\n");
-				printf("| 10. The Outer Worlds                             |\n");
-				printf("| 11. Divinity: Original Sin Enhanced Edition      |\n");
-				printf("| 12. Pillars of Eternity: Complete Edition        |\n");
-				printf("| 13. Horizon Zero Dawn                            |\n");
-				printf("| 14. Sekiro: Shadows Die Twice                    |\n");
-				printf("| 15. Middle-earth: Shadow of Mordor               |\n");
-				printf("| 16. Batman: Arkham Knight                        |\n");
-				printf("| 17. Fallout 4                                    |\n");
-				printf("| 18. Tetris Effect                                |\n");
-				printf("| 19. Nex Machina: Death Machine                   |\n");
-				printf("| 20. Rogue Legacy                                 |\n");
-				printf("| 21. Dragon Quest XI: Echoes of an Elusive Age    |\n");
-				printf("| 22. Rise of the Tomb Raider: 20 Year Celebration |\n");
-				printf("| 23. Marvel Spider-Man                            |\n");
-				printf("| 24. Guacamelee! Super Turbo Championship Edition |\n");
-				printf("| 25. Rayman Legends                               |\n");
-				printf("+--------------------------------------------------+\n");
-			}
+			do{
+				system("cls");
+				printf("+======================+\n");
+				printf("|       KODE PS4       |\n");
+				printf("|======================|\n");
+				printf("|  41  |   42  |   43  |\n");
+				printf("+======================+\n");
+				printf("Masukkan kode PS : ");
+				scanf("%d", &kode);
+				if(kode==41){
+					printf("+==================================================+\n");
+					printf("|                   Daftar Game                    |\n");
+					printf("|==================================================|\n");
+					printf("| 1.  Assassin's Creed Valhalla                    |\n");
+					printf("| 2.  Cyberpunk 2077                               |\n");
+					printf("| 3.  The Crew® 2                                  |\n");
+					printf("| 4.  The Sims™ 4                                  |\n");
+					printf("| 5.  EA SPORTS™ FIFA 23 Standard Edition PS4™     |\n");
+					printf("| 6.  Resident Evil Village                        |\n");
+					printf("| 7.  Horizon Zero Dawn™                           |\n");
+					printf("| 8.  The Last of Us™ Remastered                   |\n");
+					printf("| 9.  Hello Neighbor                               |\n");
+					printf("| 10. Watch Dogs: Legion                           |\n");
+					printf("| 11. Dead by Daylight                             |\n");
+					printf("| 12. God of War Ragnarök                          |\n");
+					printf("| 13. Metro Exodus                                 |\n");
+					printf("| 14. Nier: Automata                               |\n");
+					printf("| 15. Monster Hunter World                         |\n");
+					printf("| 16. Apex Legends                                 |\n");
+					printf("| 17. Yakuza 0                                     |\n");
+					printf("| 18. Tetris Effect                                |\n");
+					printf("| 19. Dreams                                       |\n");
+					printf("| 20. Final Fantasy 7 Remake                       |\n");
+					printf("| 21. Overwatch                                    |\n");
+					printf("| 22. Ratchet & Clank                              |\n");
+					printf("| 23. What Remains of Edith Finch                  |\n");
+					printf("| 24. Uncharted 4: A Thief's End                   |\n");
+					printf("| 25. Metal Gear Solid V: The Phantom Pain         |\n");
+					printf("+--------------------------------------------------+\n");
+					printf("Klik b untuk kembali : ");
+					scanf(" %c", &pilihan);
+				}else if(kode==42){
+					printf("+==================================================+\n");
+					printf("|                   Daftar Game                    |\n");
+					printf("|==================================================|\n");
+					printf("| 1.  Life is Strange                              |\n");
+					printf("| 2.  Danganronpa 1-2 Reload                       |\n");
+					printf("| 3.  Ys VIII: Lacrimosa of DANA                   |\n");
+					printf("| 4.  Tomb Raider: Definitive Edition              |\n");
+					printf("| 5.  DOOM                                         |\n");
+					printf("| 6.  428: Shibuya Scramble                        |\n");
+					printf("| 7.  Resident Evil 4                              |\n");
+					printf("| 8.  Final Fantasy XIV: Heavensward               |\n");
+					printf("| 9.  NBA 2K17                                     |\n");
+					printf("| 10. Geometry Wars 3: Dimensions                  |\n");
+					printf("| 11. Ni no Kuni II: Revenant Kingdom              |\n");
+					printf("| 12. Pillars of Eternity: Complete Edition        |\n");
+					printf("| 13. Beat Saber                                   |\n");
+					printf("| 14. Wipeout: Omega Collection                    |\n");
+					printf("| 15. Middle-earth: Shadow of Mordor               |\n");
+					printf("| 16. Apex Legends                                 |\n");
+					printf("| 17. Pro Evolution Soccer 2016                    |\n");
+					printf("| 18. Tetris Effect                                |\n");
+					printf("| 19. Dreams                                       |\n");
+					printf("| 20. Rogue Legacy                                 |\n");
+					printf("| 21. Overwatch                                    |\n");
+					printf("| 22. Valkyria Chronicles Remastered               |\n");
+					printf("| 23. What Remains of Edith Finch                  |\n");
+					printf("| 24. Street Fighter V: Arcade Edition             |\n");
+					printf("| 25. Bloodborne: The Old Hunters                  |\n");
+					printf("+--------------------------------------------------+\n");
+					printf("Klik b untuk kembali : ");
+					scanf(" %c", &pilihan);
+				}else if(kode==43){
+					printf("+==================================================+\n");
+					printf("|                   Daftar Game                    |\n");
+					printf("|==================================================|\n");
+					printf("| 1.  Resident Evil 7: biohazard                   |\n");
+					printf("| 2.  Dishonored 2                                 |\n");
+					printf("| 3.  Devil May Cry 5                              |\n");
+					printf("| 4.  Dark Souls II: Scholar of the First Sin      |\n");
+					printf("| 5.  DOOM                                         |\n");
+					printf("| 6.  F1 2017                                      |\n");
+					printf("| 7.  Resident Evil 4                              |\n");
+					printf("| 8.  Wolfenstein II: The New Colossus             |\n");
+					printf("| 9.  NBA 2K17                                     |\n");
+					printf("| 10. The Outer Worlds                             |\n");
+					printf("| 11. Divinity: Original Sin Enhanced Edition      |\n");
+					printf("| 12. Pillars of Eternity: Complete Edition        |\n");
+					printf("| 13. Horizon Zero Dawn                            |\n");
+					printf("| 14. Sekiro: Shadows Die Twice                    |\n");
+					printf("| 15. Middle-earth: Shadow of Mordor               |\n");
+					printf("| 16. Batman: Arkham Knight                        |\n");
+					printf("| 17. Fallout 4                                    |\n");
+					printf("| 18. Tetris Effect                                |\n");
+					printf("| 19. Nex Machina: Death Machine                   |\n");
+					printf("| 20. Rogue Legacy                                 |\n");
+					printf("| 21. Dragon Quest XI: Echoes of an Elusive Age    |\n");
+					printf("| 22. Rise of the Tomb Raider: 20 Year Celebration |\n");
+					printf("| 23. Marvel Spider-Man                            |\n");
+					printf("| 24. Guacamelee! Super Turbo Championship Edition |\n");
+					printf("| 25. Rayman Legends                               |\n");
+					printf("+--------------------------------------------------+\n");
+					printf("Klik b untuk kembali : ");
+					scanf(" %c", &pilihan);
+				}
+			}while(pilihan=='b');
 			break;
 		case 3 :
 			system("cls");
@@ -422,22 +491,139 @@ void ps(){
 				printf("+--------------------------------------------------+\n");
 			}
 			break;
+		}
+	}
+	
+void rental(){
+	int kode;
+	printf("+================================+\n");
+	printf("|        JENIS PLAYSTATION       |\n");
+	printf("|================================|\n");
+	printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
+	printf("+================================+\n");
+	printf("Masukkan Jenis PS yang ingin di rental (1-3) : ");
+	scanf("%d", &kode);
+	if(kode==1){
+		pembayaranps3();
+	}else if(kode==2){
+		pembayaranps4();
+	}else if(kode==3){
+		pembayaranps5();
 	}
 }
 void timer(){
-	
-}
-void pembayaran(){
-	int kode;
-	printf("Masukkan kode PS yang dirental (31-33): ");
-	scanf("%d", &kode);
-	if(kode==31){
-		
-	}else if(kode==32){
-		
-	}else if(kode==33){
-		
-	}else{
-		printf("Input salah!!");
+	int h=0, j=0, m=0, d=0;
+	printf("Input waktu sewa (d:jj:mm:dd) : ");
+	scanf("%d:%d:%d:%d", &h, &j, &m, &d);
+	while(1){
+		printf("     \r%d:%d:%d:%d", h, j, m, d);
+		Sleep(1000);
+		if(d!=0){
+			d--;
+		}else if(d==0 && m!=0){
+			d=59;
+			m--;
+		}else if(d==0 && m==0 && j!=0){
+			j--;
+			m=59;
+			d=59;
+		}else if(d==0 && m==0 && j==0 && h!=0){
+			h--;
+			j=59;
+			m=59;
+			d=59;
+		}else if(h==0 && j==0 && m==0 && d==0){
+			tambah_sewa();
+		}
 	}
+}
+void pembayaranps3(){
+	printf("Masukkan kode ps (31-33) : ");
+	scanf("%d", &plg.kode);
+	printf("Nama Pelanggan : ");
+	scanf(" %[^\n]%*c", &plg.nama);
+	printf("Masukkan no_hp : ");
+	scanf(" %[^\n]%*c", &plg.no_hp);
+	printf("Masukkan alamat : ");
+	scanf(" %[^\n]%*c", &plg.alamat);
+	printf("Masukkan lama peminjaman (jam) : ");
+	scanf("%d", &plg.tanggal);
+		if(plg.tanggal==1){
+			plg.bayar= ps3 * 1;
+		}else{
+			plg.bayar = ps3 * plg.tanggal;
+		}
+	printf("\nKode PS yang di rental : %d", plg.kode);
+	printf("\nNama Pelanggan : %s\n", plg.nama);
+	printf("Nomor telepon : %s\n", plg.no_hp);
+	printf("Alamat : %s\n", plg.alamat);
+	printf("Lama peminjaman : %d jam\n", plg.tanggal);
+	printf("Total bayar : %d\n", plg.bayar);
+	timer();
+}
+void pembayaranps4(){
+	printf("Nama Pelanggan : ");
+	scanf(" %[^\n]%*c", &plg.nama);
+	printf("Masukkan no_hp : ");
+	scanf(" %[^\n]%*c", &plg.no_hp);
+	printf("Masukkan alamat : ");
+	scanf(" %[^\n]%*c", &plg.alamat);
+	printf("Masukkan lama peminjaman (jam) : ");
+	scanf("%d", &plg.tanggal);
+		if(plg.tanggal==1){
+			plg.bayar= ps4 * 1;
+		}else{
+			plg.bayar = ps4 * plg.tanggal;
+		}
+	printf("\nNama Pelanggan : %s\n", plg.nama);
+	printf("Nomor telepon : %s\n", plg.no_hp);
+	printf("Alamat : %s\n", plg.alamat);
+	printf("Lama peminjaman : %d jam\n", plg.tanggal);
+	printf("Total bayar : %d\n", plg.bayar);
+	timer();
+}
+void pembayaranps5(){
+	printf("Nama Pelanggan : ");
+	scanf(" %[^\n]%*c", &plg.nama);
+	printf("Masukkan no_hp : ");
+	scanf(" %[^\n]%*c", &plg.no_hp);
+	printf("Masukkan alamat : ");
+	scanf(" %[^\n]%*c", &plg.alamat);
+	printf("Masukkan lama peminjaman (jam) : ");
+	scanf("%d", &plg.tanggal);
+		if(plg.tanggal==1){
+			plg.bayar= ps5 * 1;
+		}else{
+			plg.bayar = ps5 * plg.tanggal;
+		}
+	printf("\nNama Pelanggan : %s\n", plg.nama);
+	printf("Nomor telepon : %s\n", plg.no_hp);
+	printf("Alamat : %s\n", plg.alamat);
+	printf("Lama peminjaman : %d jam\n", plg.tanggal);
+	printf("Total bayar : %d\n", plg.bayar);
+	timer();
+	tambah_sewa();
+}
+void tambah_sewa(){
+	char pilih;
+	printf("\nIngin menambah waktu sewa (y/t)? : ");
+	scanf(" %c", &pilih);
+	if(pilih=='y'){
+		printf("Masukkan kode ps : ");
+		scanf("%d", &tb.kode);
+		printf("Masukkan nama : ");
+		scanf(" %[^\n]%*c", &tb.nama);
+		printf("Masukkan tambahan waktu (jam) : ");
+		scanf("%d", &tb.tambah_waktu);
+	}else {
+		
+	}
+}
+void keluar(){
+	printf("=========================================\n");
+	printf("||             A.R.A RENTAL            ||\n");
+	printf("=========================================\n");
+	printf("||     Terimakasih sudah berkunjung    ||\n");
+	printf("||     Semoga harimu menyenangkan :)   ||\n");
+	printf("=========================================\n");	
 }
