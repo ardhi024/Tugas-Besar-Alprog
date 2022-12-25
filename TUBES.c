@@ -40,6 +40,8 @@ void pembayaranps5();
 void tambah_sewa();
 void keluar();
 void menu2();
+void login();
+
 int validasi(int *input);
 
 
@@ -188,31 +190,30 @@ void pelanggan(){
 		getch();
 		pelanggan();
 	}if(menu==2){
-		FILE *reg;
-		reg=fopen("Registrasi_pelanggan.txt", "r");
-		printf("Masukkan Username : ");
-      	scanf("%s", &user);
-		printf("Masukkan Password : ");
-      	scanf("%s", &pass);
-      	fscanf(reg,"%s",r.username); 
-      	fscanf(reg,"%s",r.password); 
-		while(fread(&r,sizeof(r),1,reg)){
-			if(strcmp(r.username,user)==0 && strcmp(r.password,pass)==0){
-                printf("\nberhasil masuk \n");
-                printf("Silakan klik apapun untuk melanjutkan program\n");
-                getch();
-                menu2();
-                exit(0);
-            }else{
-                printf("\n___________________________________");
-                printf("\n data tidak dapat ditemukan");
-                printf("\n silahkan registrasi terlebih dahulu");
-                getch();
-                pelanggan();
-            }
+		// FILE *reg;
+		// reg=fopen("Registrasi_pelanggan.txt", "r");
+		// printf("Masukkan Username : ");
+      	// scanf("%s", &user);
+		// printf("Masukkan Password : ");
+      	// scanf("%s", &pass);
+		// while(fread(&r,sizeof(r),1,reg)){
+		// 	if(strcmp(user,r.username)==0 && strcmp(pass,r.password)==0){
+        //         printf("\nberhasil masuk \n");
+        //         printf("Silakan klik apapun untuk melanjutkan program\n");
+        //         getch();
+        //         menu2();
+        //         exit(0);
+        //     }else{
+        //         printf("\n___________________________________");
+        //         printf("\n data tidak dapat ditemukan");
+        //         printf("\n silahkan registrasi terlebih dahulu");
+        //         getch();
+        //         pelanggan();
+        //     }
             
-		}
-        fclose(reg);
+		// }
+        // fclose(reg);
+        login();
 
 	}
     if(menu==3){
@@ -866,4 +867,36 @@ int validasi(int *pilih){
         printf("input yang benar !\n");             
     }
 
+}
+
+void login(){
+    int check =0;
+
+    char username[100];
+    char password[255];
+
+    FILE *log;
+    log = fopen("Registrasi_pelanggan.txt","r");
+
+    printf("username : ");
+    scanf("%s", &username);
+    printf("passworrd : ");
+    scanf("%s", &password);
+
+    while(fscanf(log,"%s %s %s %s %s \n", r.nama,r.alamat,r.email,r.username,r.password)!=EOF){
+        if(strcmp(username,r.username)==0  ){
+            if(strcmp(password,r.password)==0){
+                check =1;
+                printf("login succes\n");
+                
+                break;
+            }
+            
+
+        }
+    }
+    if(!check){
+        printf("error\n");
+    }
+    fclose(log);
 }
