@@ -174,14 +174,15 @@ void pelanggan(){
 		scanf(" %s", &r.password);
 		printf("Akun berhasil dibuat\n");
 		printf("Catatan : Username dan Password jangan sampai lupa!!\n");
-		fprintf(reg, "============================================\n");
-		fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
-		fprintf(reg, "============================================\n");
-		fprintf(reg, "|| Nama     : %-27s ||\n", r.nama);
-		fprintf(reg, "|| Alamat   : %-27s ||\n", r.alamat);
-		fprintf(reg, "|| Username : %-27s ||\n", r.username);
-		fprintf(reg, "|| Password : %-27s ||\n", r.password);
-		fprintf(reg, "============================================\n");
+		// fprintf(reg, "============================================\n");
+		// fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
+		// fprintf(reg, "============================================\n");
+		// fprintf(reg, "|| Nama     : %-27s ||\n", r.nama);
+		// fprintf(reg, "|| Alamat   : %-27s ||\n", r.alamat);
+		// fprintf(reg, "|| Username : %-27s ||\n", r.username);
+		// fprintf(reg, "|| Password : %-27s ||\n", r.password);
+		// fprintf(reg, "============================================\n");
+        fwrite(&r,sizeof(r),1,reg);
 		fclose(reg);
 		printf("Klik apapun untuk melanjutkan program\n");
 		getch();
@@ -195,26 +196,24 @@ void pelanggan(){
       	scanf("%s", &pass);
       	fscanf(reg,"%s",r.username); 
       	fscanf(reg,"%s",r.password); 
-		while(fread(&r,sizeof(struct regis),1,reg)){
-			if(strcmp(r.username,user)){
-				if(strcmp(r.password,pass)){
-				i=1;
-			}
-				if(i==1){
-					printf("\nberhasil masuk \n");
-					printf("Silakan klik apapun untuk melanjutkan program\n");
-					getch();
-					menu2();
-					exit(0);
-				}else{
-					printf("\n___________________________________");
-					printf("\n data tidak dapat ditemukan");
-					printf("\n silahkan registrasi terlebih dahulu");
-					getch();
-				}
-			fclose(reg);
-			}
+		while(fread(&r,sizeof(r),1,reg)){
+			if(strcmp(r.username,user)==0 && strcmp(r.password,pass)==0){
+                printf("\nberhasil masuk \n");
+                printf("Silakan klik apapun untuk melanjutkan program\n");
+                getch();
+                menu2();
+                exit(0);
+            }else{
+                printf("\n___________________________________");
+                printf("\n data tidak dapat ditemukan");
+                printf("\n silahkan registrasi terlebih dahulu");
+                getch();
+                pelanggan();
+            }
+            
 		}
+        fclose(reg);
+
 	}
     if(menu==3){
         system("cls");
