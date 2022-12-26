@@ -1,9 +1,11 @@
+//include standard library C
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
 #include <windows.h>
 
+//MEndefinisi konstanta dalam program
 #define true 1
 #define ps3 5000
 #define ps4 7000
@@ -11,14 +13,15 @@
 #define BUFFER 1048
 #define KOLOM 255
 
-struct regis{
+//Mendefinisikan Struct
+struct regis{   //Struct untuk registrasi dan login pelanggan
 	char nama[15];
 	char alamat[20];
 	char email[50];
 	char username[100];
 	char password[100];
 } r;
-struct pelanggan{
+struct pelanggan{   //Struct untuk transaksi penyewaan PS
 	char nama[30];
 	char no_hp[13];
 	char alamat[100];
@@ -28,12 +31,13 @@ struct pelanggan{
 	int tambah_game;
 	int tambah_sewa;
 } plg;
-struct tambah{
+struct tambah{  //Struct untuk tambah waktu sewa rental
 	int kode;
 	char nama;
 	int tambah_waktu;
 } tb;
 
+// Deklarasi Funsgi dan Prosedur
 void admin();
 void pelanggan();
 void ps();
@@ -47,18 +51,31 @@ void menu2();
 int validasi(int *input);
 void timer();
 void struk();
+
+//Deklarasi Variabel global
 int menu,menu;
+
+// Fungsi Main
 int main(){
 	char usr[5], pas[8];
 	int status = 0, salah = 0;
-	printf("============================================\n");
-	printf("||      SELAMAT DATANG DI A.R.A PS        ||\n");
-	printf("============================================\n");
-	printf("|| 1. Masuk sebagai admin                 ||\n");
-	printf("|| 2. Masuk sebagai pelanggan             ||\n");
-    printf("|| 0. Keluar                              ||\n");
-	printf("============================================\n");
-    do{
+
+    do{    
+        system("cls");
+        printf("          ||||||||||||||||||||||||| \n");
+        printf("        ||            .            ||\n");
+        printf("      ||              .              ||\n");
+        printf("    ||     A.R.A      .        PS      ||\n");
+        printf("  ||      ======      .       ====       ||\n");
+        printf("||                    .                    ||\n");
+        printf("======================.======================\n");
+        printf("||      SELAMAT DATANG DI A.R.A PS        ||\n");
+        printf("============================================\n");
+        printf("|| 1. Masuk sebagai admin                 ||\n");
+        printf("|| 2. Masuk sebagai pelanggan             ||\n");
+        printf("|| 0. Keluar                              ||\n");
+        printf("============================================\n");
+    
         printf("Masukkan pilihan anda (1/2/0) : ");
         validasi(&menu);
         switch(menu){
@@ -97,7 +114,10 @@ int main(){
                 keluar();
 	    }
         if(menu<0 || menu>2){
-            printf("Input salah !\n");
+            printf("+=================+\n");
+            printf("|  input salah!!  |\n");
+            printf("+=================+\n");
+            system("pause");
         }
         fflush(stdin);
     }while(menu<0 || menu>2);
@@ -106,20 +126,25 @@ int main(){
 void admin(){
 	char usr[5], pas[8];
 	int status = 0, salah = 0;
-   	system("cls");
-   	printf("============================================\n");
-	printf("||     ANDA BERADA DI DALAM MODE ADMIN    ||\n");
-	printf("============================================\n");
-	printf("|| 1. Lihat daftar pelanggan              ||\n");
-	printf("|| 2. Lihat daftar registrasi             ||\n");
-	printf("|| 3. Lihat daftar game ps                ||\n");
-	printf("|| 4. Kembali                             ||\n");
-	printf("============================================\n");
     do{
+        system("cls");
+        printf("============================================\n");
+        printf("||     ANDA BERADA DI DALAM MODE ADMIN    ||\n");
+        printf("============================================\n");
+        printf("|| 1. Lihat daftar pelanggan              ||\n");
+        printf("|| 2. Lihat daftar registrasi             ||\n");
+        printf("|| 3. Lihat daftar game ps                ||\n");
+        printf("|| 4. Kembali                             ||\n");
+        printf("============================================\n");
+    
+        
         printf("Masukkan pilihan anda : ");
         validasi(&menu);
         if(menu<=0 || menu>4){
-            printf("Input salah !\n");
+            printf("+=================+\n");
+            printf("|  input salah!!  |\n");
+            printf("+=================+\n");
+            system("pause");
         }
         fflush(stdin);
     }while(menu<=0 || menu>4);
@@ -160,26 +185,35 @@ void admin(){
 void pelanggan(){
 	char user[100], pass[100];
 	int i;
-	printf("============================================\n");
-	printf("||     SELAMAT DATANG DI MODE PELANGGAN   ||\n");
-	printf("============================================\n");
-	printf("|| 1. Registrasi                          ||\n");
-	printf("|| 2. Login                               ||\n");
-    printf("|| 3. Kembali                             ||\n");
-    printf("|| 0. Keluar                              ||\n");
-	printf("============================================\n");
     do{
-        printf("Masukkan pilihan anda : ");
+        system("cls");
+        printf("============================================\n");
+        printf("||     SELAMAT DATANG DI MODE PELANGGAN   ||\n");
+        printf("============================================\n");
+        printf("|| 1. Registrasi                          ||\n");
+        printf("|| 2. Login                               ||\n");
+        printf("|| 3. Kembali                             ||\n");
+        printf("|| 0. Keluar                              ||\n");
+        printf("============================================\n");
+  
+        printf("============================================\n");
+        printf("// Masukkan pilihan anda : ");
         validasi(&menu);
         if(menu<0 || menu>3){
-            printf("Input salah !\n");
+
+            printf("+=================+\n");
+            printf("|  input salah!!  |\n");
+            printf("+=================+\n");
+            system("pause");
         }
         fflush(stdin);
     }while(menu<0 || menu>3);
 	
 	if(menu==1){
-		FILE * reg;
-		reg=fopen("Registrasi_pelanggan.txt", "a");
+		FILE *reg;
+		reg=fopen("Registrasi_pelanggan.txt", "a+");
+        // FILE *fs;
+        // fs=fopen("info_pengguna.txt","a+");
 		printf("Masukkan nama anda :");
 		scanf(" %s", &r.nama);
 		printf("Masukkan alamat anda : ");
@@ -190,15 +224,15 @@ void pelanggan(){
 		scanf(" %s", &r.password);
 		printf("Akun berhasil dibuat\n");
 		printf("Catatan : Username dan Password jangan sampai lupa!!\n");
-//		fprintf(reg, "============================================\n");
-//		fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
-//		fprintf(reg, "============================================\n");
-//		fprintf(reg, "|| Nama     : %-27s ||\n", r.nama);
-//		fprintf(reg, "|| Alamat   : %-27s ||\n", r.alamat);
-//		fprintf(reg, "|| Username : %-27s ||\n", r.username);
-//		fprintf(reg, "|| Password : %-27s ||\n", r.password);
-//		fprintf(reg, "============================================\n");
-		fwrite(&r,sizeof(r),1,reg);
+		fprintf(reg, "============================================\n");
+		fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
+		fprintf(reg, "============================================\n");
+		fprintf(reg, "|| Nama     : %-27s ||\n", r.nama);
+		fprintf(reg, "|| Alamat   : %-27s ||\n", r.alamat);
+		fprintf(reg, "|| Username : %-27s ||\n", r.username);
+		fprintf(reg, "|| Password : %-27s ||\n", r.password);
+		fprintf(reg, "============================================\n");
+		// fprintf(fs,"%s,%s,%s,%s",r.nama,r.alamat,r.username,r.password);
 		fclose(reg);
 		printf("Klik apapun untuk melanjutkan program\n");
 		getch();
@@ -209,12 +243,18 @@ void pelanggan(){
 	    char password[255];
 	
 	    FILE *log;
-	    log = fopen("Registrasi_pelanggan.txt","r");
+	    log = fopen("info_pengguna.txt","r");
 	
 	    printf("username : ");
 	    scanf("%s", &username);
 	    printf("passworrd : ");
 	    scanf("%s", &password);
+        // do{
+        //     int cek = fscanf(log,"%99[^,],%99[^\n]\n",username,password);
+            // if(cek==2){
+            //     printf()
+            // }
+        // }while(!feof(log));
 	
 	    while(fscanf(log,"%s %s %s %s %s \n", r.nama,r.alamat,r.email,r.username,r.password)!=EOF){
 	        if(strcmp(username,r.username)==0  ){
@@ -246,19 +286,25 @@ void pelanggan(){
 }
 
 void menu2(){
-	printf("============================================\n");
-	printf("||     ANDA BERADA DI MODE PELANGGAN      ||\n");
-	printf("============================================\n");
-	printf("|| 1. Lihat Daftar Game                   ||\n");
-	printf("|| 2. Rental PS                           ||\n");
-    printf("|| 3. Kembali                             ||\n");
-    printf("|| 0. Keluar                              ||\n");
-	printf("============================================\n");
     do{
+        system("cls");
+        printf("============================================\n");
+        printf("||     ANDA BERADA DI MODE PELANGGAN      ||\n");
+        printf("============================================\n");
+        printf("|| 1. Lihat Daftar Game                   ||\n");
+        printf("|| 2. Rental PS                           ||\n");
+        printf("|| 3. Kembali                             ||\n");
+        printf("|| 0. Keluar                              ||\n");
+        printf("============================================\n");
+    
         printf("Masukkan pilihan anda : ");
         validasi(&menu);
         if(menu<0 || menu>3){
-            printf("Input salah !\n");
+
+            printf("+=================+\n");
+            printf("|  input salah!!  |\n");
+            printf("+=================+\n");
+            system("pause");
         }
         fflush(stdin);
     }while(menu<0 || menu>3);
@@ -267,19 +313,24 @@ void menu2(){
 		system("cls");
 		ps();
 	}else if(menu==2){
-		printf("+================================+\n");
-		printf("|        JENIS PLAYSTATION       |\n");
-		printf("|================================|\n");
-		printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
-        printf("|================================|\n");
-        printf("|  4. Kembali                    |\n");
-        printf("|  0. Keluar                     |\n");
-		printf("+================================+\n");
         do{
+            system("cls");
+            printf("+================================+\n");
+            printf("|        JENIS PLAYSTATION       |\n");
+            printf("|================================|\n");
+            printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
+            printf("|================================|\n");
+            printf("|  4. Kembali                    |\n");
+            printf("|  0. Keluar                     |\n");
+            printf("+================================+\n");
+        
             printf("Masukkan menu : ");
             validasi(&menu);
             if(menu<0 || menu>4){
-                printf("input salah\n");
+                printf("+=================+\n");
+                printf("|  input salah!!  |\n");
+                printf("+=================+\n");
+                system("pause");
             }
             fflush(stdin);
         }while(menu<0 || menu>4);
@@ -305,19 +356,24 @@ void menu2(){
 	
 void ps(){
 	char pilihan, r;
-	printf("+================================+\n");
-	printf("|        JENIS PLAYSTATION       |\n");
-	printf("|================================|\n");
-	printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
-    printf("|================================|\n");
-    printf("|  4. Kembali                    |\n");
-    printf("|  0. Keluar                     |\n");
-	printf("+================================+\n");
     do{
+        system("cls");
+        printf("+================================+\n");
+        printf("|        JENIS PLAYSTATION       |\n");
+        printf("|================================|\n");
+        printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
+        printf("|================================|\n");
+        printf("|  4. Kembali                    |\n");
+        printf("|  0. Keluar                     |\n");
+        printf("+================================+\n");
+   
         printf("Masukkan menu : ");
 	    validasi(&menu);
         if(menu<0 || menu>4){
-            printf("input salah\n");
+            printf("+=================+\n");
+            printf("|  input salah!!  |\n");
+            printf("+=================+\n");
+            system("pause");
         }
         fflush(stdin);
     }while(menu<0 || menu>4);
@@ -325,16 +381,17 @@ void ps(){
 	switch(menu){
 		case 1 :
 			do{
-				system("cls");
-				printf("+======================+\n");
-				printf("|       KODE PS3       |\n");
-				printf("|======================|\n");
-				printf("|  31  |   32  |   33  |\n");
-                printf("|======================|\n");
-                printf("|  4. Kembali          |\n");
-                printf("|  0. Keluar           |\n");
-				printf("+======================+\n");
                 do{
+                    system("cls");
+                    printf("+======================+\n");
+                    printf("|       KODE PS3       |\n");
+                    printf("|======================|\n");
+                    printf("|  31  |   32  |   33  |\n");
+                    printf("|======================|\n");
+                    printf("|  4. Kembali          |\n");
+                    printf("|  0. Keluar           |\n");
+                    printf("+======================+\n");
+                
                     printf("Masukkan kode  : ");
                     validasi(&menu);
                     if(menu==4){
@@ -349,7 +406,10 @@ void ps(){
                     }
                     
                     if(menu<31 || menu>33){
-                        printf("input salah\n");
+                        printf("+=================+\n");
+                        printf("|  input salah!!  |\n");
+                        printf("+=================+\n");
+                        system("pause");
                     }
                     fflush(stdin);
                 }while(menu<31 || menu>33);
@@ -384,7 +444,7 @@ void ps(){
 					printf("| 24. Dead Space                                         |\n");
 					printf("| 25. Naruto X Boruto Ninja Voltage                      |\n");
 					printf("+--------------------------------------------------------+\n");
-					printf("Klik b untuk kembali : ");
+					printf("\nKlik b untuk kembali : ");
 					scanf(" %c", &pilihan);
 				}else if(menu==32){
 					printf("+========================================================+\n");
@@ -416,7 +476,7 @@ void ps(){
 					printf("| 24. Drakengard 3                                       |\n");
 					printf("| 25. Pro Evolution Soccer (PES) 2020                    |\n");
 					printf("+--------------------------------------------------------+\n");
-					printf("Klik b untuk kembali : ");
+					printf("\nKlik b untuk kembali : ");
 					scanf(" %c", &pilihan);
 				}else if(menu==33){
 					printf("+========================================================+\n");
@@ -448,23 +508,24 @@ void ps(){
 					printf("| 24. Pro Evolution Soccer (PES) 2020                    |\n");
 					printf("| 25. Dynasty Warriors 8: Empires                        |\n");
 					printf("+--------------------------------------------------------+\n");
-					printf("Klik b untuk kembali : ");
+					printf("\nKlik b untuk kembali : ");
 					scanf(" %c", &pilihan);
 				}
 			}while(pilihan=='b');
 			break;
 		case 2 :
 			do{
-				system("cls");
-				printf("+======================+\n");
-				printf("|       KODE PS4       |\n");
-				printf("|======================|\n");
-				printf("|  41  |   42  |   43  |\n");
-                printf("|======================|\n");
-                printf("|  4. Kembali          |\n");
-                printf("|  0. Keluar           |\n");
-				printf("+======================+\n");
                 do{
+                    system("cls");
+                    printf("+======================+\n");
+                    printf("|       KODE PS4       |\n");
+                    printf("|======================|\n");
+                    printf("|  41  |   42  |   43  |\n");
+                    printf("|======================|\n");
+                    printf("|  4. Kembali          |\n");
+                    printf("|  0. Keluar           |\n");
+                    printf("+======================+\n");
+                
                     printf("Masukkan kode  : ");
                     validasi(&menu);
                     if(menu==4){
@@ -479,7 +540,10 @@ void ps(){
                     }
                     
                     if(menu<41 || menu>43){
-                        printf("input salah\n");
+                        printf("+=================+\n");
+                        printf("|  input salah!!  |\n");
+                        printf("+=================+\n");
+                        system("pause");
                     }
                     fflush(stdin);
                 }while(menu<41 || menu>43);
@@ -585,16 +649,17 @@ void ps(){
 			break;
 		case 3 :
             do{
-                system("cls");
-                printf("+======================+\n");
-                printf("|        KODE PS5      |\n");
-                printf("|======================|\n");
-                printf("|  51  |   52  |   53  |\n");
-                printf("|======================|\n");
-                printf("|  4. Kembali          |\n");
-                printf("|  0. Keluar           |\n");
-                printf("+======================+\n");
                 do{
+                    system("cls");
+                    printf("+======================+\n");
+                    printf("|        KODE PS5      |\n");
+                    printf("|======================|\n");
+                    printf("|  51  |   52  |   53  |\n");
+                    printf("|======================|\n");
+                    printf("|  4. Kembali          |\n");
+                    printf("|  0. Keluar           |\n");
+                    printf("+======================+\n");
+                
                     printf("Masukkan kode  : ");
                     validasi(&menu);
                     if(menu==4){
@@ -609,7 +674,10 @@ void ps(){
                     }
                     
                     if(menu<51 || menu>53){
-                        printf("input salah\n");
+                        printf("+=================+\n");
+                        printf("|  input salah!!  |\n");
+                        printf("+=================+\n");
+                        system("pause");
                     }
                     fflush(stdin);
                 }while(menu<51 || menu>53);
@@ -750,7 +818,9 @@ void timer(){
 			}
 		}
 	}else{
-		printf("Input salah");
+		printf("+=================+\n");
+        printf("|  input salah!!  |\n");
+        printf("+=================+\n");
 	}
 }
 void pembayaranps3(){
@@ -803,37 +873,47 @@ void pembayaranps5(){
 void request(){
 	int tambah_game;
 	char game[20][KOLOM], pilih;
-    int i,j,lenght;   
-    printf("TAMBAHAN GAME\n\n");
-    printf("Ingin merequest game (y/t) ? : ");
+    int i,j,lenght;
+    printf("+==================================================+\n");
+    printf("|                   TAMBAH GAME                    |\n");
+    printf("+==================================================+\n");
+    printf("|  Ingin merequest game (y/t) ? : ");
     scanf(" %c", &pilih);
-    if(pilih=='y'){    	
-	    printf("Penambahan game akan dikenakan 2000 per game \n");
-	    printf("ketik jumlah game yang akan ditambahkan : ");
+    if(pilih=='y'){  
+        printf("+==================================================+\n");  	
+	    printf("| Penambahan game akan dikenakan 2000 per game     |\n");
+	    printf("| ketik jumlah game yang akan ditambahkan :         ");
 	    scanf("%d", &i);
 	    fflush(stdin);
-	
+
+        printf("\n+==================================================+\n");
 	    printf("input game : \n");
 	    for(j=0;j<i;j++){
 	        scanf("%[^\n]%*c",&game[j]);
 	        fflush(stdin);
 	    }
-	
+        printf("\n+==================================================+\n");
+        printf("Konfirmasi Game yang ingin ditambahkan \n\n")
 	    for(j=0;j<i;j++){
 	        printf("%d. %s\n", (j+1),game[j]);
 	    }
 	    plg.tambah_game = i * 2000;
 //	    printf("total biaya tambah game : %d", tambah_game);
 	}else if(pilih=='t'){
-		printf("Data terkirim\n");
-		printf("Klik apapun untuk melihat waktu");
+        printf("+================================+\n");
+		printf("| Data terkirim                   \n");
+		printf("| Klik apapun untuk melihat waktu \n");
+        printf("+================================+\n");
 	}
 }
 void tambah_sewa(){
 	char menu_sewa;
-	printf("\nIngin menambah waktu sewa (y/t)? : ");
+    printf("+==================================+\n");
+	printf("Ingin menambah waktu sewa (y/t)? :    ");
+    printf("+==================================+\n");
 	scanf(" %c", &menu_sewa);
 	if(menu_sewa=='y'){
+        printf("+==============================+\n");
 		printf("Masukkan kode ps : ");
 		scanf("%d", &tb.kode);
 		printf("Masukkan nama : ");
@@ -841,6 +921,7 @@ void tambah_sewa(){
 		printf("Masukkan tambahan waktu (jam) : ");
 		scanf("%d", &tb.tambah_waktu);
 		plg.tambah_sewa = tb.tambah_waktu * 3000 + plg.bayar;
+        printf("+==============================+\n");
 		printf("Total bayar : %d ", plg.tambah_sewa);
 	}else {
 		keluar();
@@ -879,7 +960,6 @@ int validasi(int *pilih){
     char i;
 
     fflush(stdin);
-
     while(1){
         if(fgets(array,sizeof(array),stdin)!=NULL){
             if(sscanf(array, "%d %c",pilih, &i)==1){
@@ -887,7 +967,10 @@ int validasi(int *pilih){
             }
         }
         
-        printf("input yang benar !\n");             
+        printf("+======================+\n");
+        printf("|  input yang benar!!  |\n");
+        printf("+======================+\n");
+        printf("\nInput : ");        
     }
 
 }
