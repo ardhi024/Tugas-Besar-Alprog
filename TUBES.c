@@ -62,7 +62,7 @@ int main(){
 
     do{    
         system("cls");
-        printf("          ||||||||||||||||||||||||| \n");
+        printf("          ||||||||||||||||||||||||| \n");       //Tampilan Menu Awal
         printf("        ||            .            ||\n");
         printf("      ||              .              ||\n");
         printf("    ||     A.R.A      .        PS      ||\n");
@@ -81,7 +81,7 @@ int main(){
         switch(menu){
             case 1:
                 system("cls");
-                printf("============================================\n");
+                printf("============================================\n");   
 				printf("||      SELAMAT DATANG DI MODE ADMIN      ||\n");
 				printf("============================================\n");
 			   	while(status < 3){
@@ -123,12 +123,14 @@ int main(){
     }while(menu<0 || menu>2);
 	
 }
+
+//Prosedur Menu Admin 
 void admin(){
 	char usr[5], pas[8];
 	int status = 0, salah = 0;
     do{
         system("cls");
-        printf("============================================\n");
+        printf("============================================\n");   //Tampilan awal menu admin
         printf("||     ANDA BERADA DI DALAM MODE ADMIN    ||\n");
         printf("============================================\n");
         printf("|| 1. Lihat daftar pelanggan              ||\n");
@@ -187,7 +189,7 @@ void pelanggan(){
 	int i;
     do{
         system("cls");
-        printf("============================================\n");
+        printf("============================================\n");   //tampilan awal menu pelanggan 
         printf("||     SELAMAT DATANG DI MODE PELANGGAN   ||\n");
         printf("============================================\n");
         printf("|| 1. Registrasi                          ||\n");
@@ -224,7 +226,7 @@ void pelanggan(){
 		scanf(" %s", &r.password);
 		printf("Akun berhasil dibuat\n");
 		printf("Catatan : Username dan Password jangan sampai lupa!!\n");
-		fprintf(reg, "============================================\n");
+		fprintf(reg, "============================================\n");     //mencetak data pengguna ke file txt
 		fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
 		fprintf(reg, "============================================\n");
 		fprintf(reg, "|| Nama     : %-27s ||\n", r.nama);
@@ -285,10 +287,11 @@ void pelanggan(){
     }
 }
 
+//Prosedur Menu Pelanggan
 void menu2(){
     do{
         system("cls");
-        printf("============================================\n");
+        printf("============================================\n");   //tampilan menu pelanggan yang sudah berhasil login
         printf("||     ANDA BERADA DI MODE PELANGGAN      ||\n");
         printf("============================================\n");
         printf("|| 1. Lihat Daftar Game                   ||\n");
@@ -315,7 +318,7 @@ void menu2(){
 	}else if(menu==2){
         do{
             system("cls");
-            printf("+================================+\n");
+            printf("+================================+\n"); //menu pilihan jenis PS yang tersedia
             printf("|        JENIS PLAYSTATION       |\n");
             printf("|================================|\n");
             printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
@@ -358,7 +361,7 @@ void ps(){
 	char pilihan, r;
     do{
         system("cls");
-        printf("+================================+\n");
+        printf("+================================+\n");     // Menu jenis PS yang tersedia
         printf("|        JENIS PLAYSTATION       |\n");
         printf("|================================|\n");
         printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
@@ -383,7 +386,7 @@ void ps(){
 			do{
                 do{
                     system("cls");
-                    printf("+======================+\n");
+                    printf("+======================+\n");   //menu kode PS 3 yang tersedia
                     printf("|       KODE PS3       |\n");
                     printf("|======================|\n");
                     printf("|  31  |   32  |   33  |\n");
@@ -414,6 +417,7 @@ void ps(){
                     fflush(stdin);
                 }while(menu<31 || menu>33);
 				
+                // Daftar game PS 3
 				if(menu==31){
 					printf("+========================================================+\n");
 					printf("|                      Daftar Game                       |\n");
@@ -517,7 +521,7 @@ void ps(){
 			do{
                 do{
                     system("cls");
-                    printf("+======================+\n");
+                    printf("+======================+\n");   //menu kode PS 4 yang tersedia
                     printf("|       KODE PS4       |\n");
                     printf("|======================|\n");
                     printf("|  41  |   42  |   43  |\n");
@@ -548,6 +552,7 @@ void ps(){
                     fflush(stdin);
                 }while(menu<41 || menu>43);
 				
+                //Daftar game PS 4
 				if(menu==41){
 					printf("+==================================================+\n");
 					printf("|                   Daftar Game                    |\n");
@@ -651,7 +656,7 @@ void ps(){
             do{
                 do{
                     system("cls");
-                    printf("+======================+\n");
+                    printf("+======================+\n");   //menu kode PS 5 yang tersedia
                     printf("|        KODE PS5      |\n");
                     printf("|======================|\n");
                     printf("|  51  |   52  |   53  |\n");
@@ -682,6 +687,7 @@ void ps(){
                     fflush(stdin);
                 }while(menu<51 || menu>53);
                 
+                // Daftar Game PS 5
                 if(menu==51){
                     printf("+==================================================+\n");
                     printf("|                   Daftar Game                    |\n");
@@ -793,6 +799,8 @@ void ps(){
 //			break;
 		}
 	}
+
+//Prosedur Timer Penyewaan 
 void timer(){
 	int h=0, j=0, m=0, d=0, i;
 	if(i==0){
@@ -823,6 +831,8 @@ void timer(){
         printf("+=================+\n");
 	}
 }
+
+//Prosedur input transaksi penyewaan PS 3
 void pembayaranps3(){
 	printf("Masukkan kode ps (31-33) : ");
 	scanf("%d", &plg.kode);
@@ -838,6 +848,8 @@ void pembayaranps3(){
 	plg.bayar = plg.tanggal * ps3 + plg.tambah_game;
 	struk();
 }
+
+//Prosedur input transaksi penyewaan PS 4
 void pembayaranps4(){
 	printf("Masukkan kode ps (41-43) : ");
 	scanf("%d", &plg.kode);
@@ -853,6 +865,8 @@ void pembayaranps4(){
 	plg.bayar = plg.tanggal * ps4 + plg.tambah_game;
 	struk();
 }
+
+//Prosedur input transaksi penyewaan PS 5
 void pembayaranps5(){
 	printf("Masukkan kode ps (51-53) : ");
 	scanf("%d", &plg.kode);
@@ -870,11 +884,13 @@ void pembayaranps5(){
 	system("cls");
 	struk();
 }
+
+//Prosedur untuk Request Tambah Game
 void request(){
 	int tambah_game;
 	char game[20][KOLOM], pilih;
     int i,j,lenght;
-    printf("+==================================================+\n");
+    printf("+==================================================+\n");   //tampilan menu untuk tambah game
     printf("|                   TAMBAH GAME                    |\n");
     printf("+==================================================+\n");
     printf("|  Ingin merequest game (y/t) ? : ");
@@ -906,9 +922,11 @@ void request(){
         printf("+================================+\n");
 	}
 }
+
+//Prosedur untuk Tambah waktu sewa
 void tambah_sewa(){
 	char menu_sewa;
-    printf("+==================================+\n");
+    printf("+==================================+\n");   //tampilan menu untuk tambah sewa
 	printf("Ingin menambah waktu sewa (y/t)? :    ");
     printf("+==================================+\n");
 	scanf(" %c", &menu_sewa);
@@ -927,11 +945,13 @@ void tambah_sewa(){
 		keluar();
 	}
 }
+
+//Prosedur Struk Transaksi 
 void struk(){
 	int i;
 	FILE * st;
 	st=fopen("Data Pelanggan.txt", "a");
-	fprintf(st, "============================================\n");
+	fprintf(st, "============================================\n");  //tamplan yang akan di cetak ke struk penyewaan dalam file txt
 	fprintf(st, "||            STRUCT PEMBAYARAN           ||\n");
 	fprintf(st, "============================================\n");
 	fprintf(st, "|| Kode PS    : %-25d ||\n", plg.kode);
@@ -946,8 +966,10 @@ void struk(){
 	i=0;
 	timer();
 }
+
+// Prosedur Pesan keluar Program
 void keluar(){
-	printf("=========================================\n");
+	printf("=========================================\n");  //tampilan penutup program 
 	printf("||             A.R.A RENTAL            ||\n");
 	printf("=========================================\n");
 	printf("||     Terimakasih sudah berkunjung    ||\n");
@@ -955,6 +977,7 @@ void keluar(){
 	printf("=========================================\n");	
 }
 
+//Fungsi Validasi Input
 int validasi(int *pilih){
     char array[BUFFER];
     char i;
