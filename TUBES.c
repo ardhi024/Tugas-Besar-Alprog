@@ -24,7 +24,7 @@ struct pelanggan{   //Struct untuk transaksi penyewaan PS
 	char nama[30];
 	char no_hp[13];
 	char alamat[100];
-	int tanggal;
+	int jam;
 	int bayar;
 	int kode;
 	int tambah_game;
@@ -135,7 +135,8 @@ int main(){
 //Prosedur Menu Admin 
 void admin(){
 	char usr[50], pas[50];
-	int status = 0, salah = 0;
+	int status = 0, salah = 0, i;
+	i=0;
     do{
         system("cls");
         printf("============================================\n");   //Tampilan awal menu admin
@@ -370,7 +371,7 @@ void menu2(){
 	}
 
     if(menu==3){
-//      system("cls");
+      system("cls");
         stok();
     }
     if(menu==4){
@@ -384,7 +385,9 @@ void menu2(){
 }
 	
 void ps(){
-	char pilihan, r;
+	char pilihan;
+	int i;
+	i=1;
     do{
         system("cls");
         printf("+================================+\n");     // Menu jenis PS yang tersedia
@@ -816,12 +819,12 @@ void ps(){
             }while(pilihan=='b');
 			
 			break;
-//		case 4 :
-//			if(admin()==4){
-//				admin();
-//			}else{
-//				pelaggan();
-//			}
+		case 4 :
+			if(i==0){
+				admin();
+			}else if(i==1){
+				pelanggan();
+			}
 		case 0 :
 			keluar();
 			break;
@@ -832,8 +835,8 @@ void ps(){
 void timer(){
 	int h=0, j=0, m=0, d=0, i;
 	if(i==0){
-		m=plg.tanggal;
-		j=0;
+		j=plg.jam;
+		m=0;
 		d=0;
 		printf("\n===========\n");
 		while(1){
@@ -877,11 +880,11 @@ void pembayaranps3(){
 	scanf(" %[^\n]%*c", &plg.alamat);
 	printf("===========================================\n");
 	printf("Masukkan lama peminjaman (jam) : ");
-	scanf("%d", &plg.tanggal);
+	scanf("%d", &plg.jam);
 	printf("===========================================\n");
 	request();
 	getch();
-	plg.bayar = plg.tanggal * ps3 + plg.tambah_game;
+	plg.bayar = plg.jam * ps3 + plg.tambah_game;
 	struk();
 }
 
@@ -900,11 +903,11 @@ void pembayaranps4(){
 	scanf(" %[^\n]%*c", &plg.alamat);
 	printf("===========================================\n");
 	printf("Masukkan lama peminjaman (jam) : ");
-	scanf("%d", &plg.tanggal);
+	scanf("%d", &plg.jam);
 	printf("===========================================\n");
 	request();
 	getch();
-	plg.bayar = plg.tanggal * ps4 + plg.tambah_game;
+	plg.bayar = plg.jam * ps4 + plg.tambah_game;
 	struk();
 }
 
@@ -923,11 +926,11 @@ void pembayaranps5(){
 	scanf(" %[^\n]%*c", &plg.alamat);
 	printf("===========================================\n");
 	printf("Masukkan lama peminjaman (jam) : ");
-	scanf("%d", &plg.tanggal);
+	scanf("%d", &plg.jam);
 	printf("===========================================\n");
 	request();
 	getch();
-	plg.bayar = plg.tanggal * ps5 + plg.tambah_game;
+	plg.bayar = plg.jam * ps5 + plg.tambah_game;
 	system("cls");
 	struk();
 }
@@ -998,13 +1001,15 @@ void tambah_sewa(){
 		fprintf(sewa, "|| Nama          : %-22s ||\n", plg.nama);
 		fprintf(sewa, "|| No Hp         : %-22s ||\n", plg.no_hp);
 		fprintf(sewa, "|| Alamat        : %-22s ||\n", plg.alamat);
-		fprintf(sewa, "|| Waktu sewa    : %-18d jam ||\n", plg.tanggal);
+		fprintf(sewa, "|| Waktu sewa    : %-18d jam ||\n", plg.jam);
 		fprintf(sewa, "|| Biaya game    : %-22d ||\n", plg.tambah_game);
 		fprintf(sewa, "|| Biaya rental  : %-22d ||\n", plg.bayar);
-		fprintf(sewa, "|| Biaya nambah  : %-22d ||\n", tb.tambah_waktu);
+		fprintf(sewa, "|| Biaya nambah  : %-18d jam ||\n", tb.tambah_waktu);
 		fprintf(sewa, "|| Total bayar   : %-22d ||\n", plg.tambah_sewa);
 		fprintf(sewa, "============================================\n");
 		fclose(sewa);
+		getch();
+		system("cls");
 		timer();
 	}else {
 		keluar();
@@ -1013,22 +1018,32 @@ void tambah_sewa(){
 
 void stok(){
 	int kode, i, check=0;
-	FILE * cek;
-	cek=fopen("Info pelanggan", "r");
+	printf("=====================================\n");
+	printf("||         DAFTAR KODE PS          ||\n");
+	printf("=====================================\n");	
+	printf("||      31[]    32[]    33[]       ||\n");
+	printf("||      41[]    42[]    43[]       ||\n");
+	printf("||      51[]    52[]    53[]       ||\n");
+	printf("=====================================\n");
 	printf("Masukkan kode ps : ");
 	scanf("%d", &kode);
-	printf("List kode PS\n");
-	printf("31[]  32[]  33[]\n41[]  42[]  43[]\n51[]  52[]  53[]");
-	while(fscanf(cek,"\n%d, %s, %s, %s, %d, %d, %d", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.tanggal, plg.tambah_game, plg.bayar)!=EOF){
+	printf("===========================================\n");
+	FILE * cek;
+	cek=fopen("Info pelanggan.txt", "r");
+	while(fscanf(cek,"%d, %s, %s, %s, %d, %d, %d\n", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.jam, plg.tambah_game, plg.bayar)!=EOF){
 	    if(kode==plg.kode){
-	        check =1;
-	        printf("\nPS dengan Kode %d masih digunakan selama %d jam\n", plg.kode, plg.tanggal);
-	        printf("\nSilakan cek kode yang lain");
+	        check=1;
+	        printf("=======================================================\n");
+	        printf("|| PS dengan Kode %2d masih digunakan selama %2d jam ||\n", plg.kode, plg.jam);
+	        printf("||           Silakan cek kode yang lain              ||\n");
+	        printf("=======================================================\n");
 	        getch();
 	        stok();
 	        break;          	        	
 	    }else{
-	       	printf("\nPS tersedia, silkanan pesan");
+	    	printf("=================================\n");
+	       	printf("|| PS tersedia, silkanan pesan ||\n");
+	       	printf("=================================\n");
 	       	getch();
 	       	pelanggan();
 	       	break;
@@ -1051,11 +1066,11 @@ void struk(){
 	fprintf(st, "|| Nama       : %-25s ||\n", plg.nama);
 	fprintf(st, "|| No Hp      : %-25s ||\n", plg.no_hp);
 	fprintf(st, "|| Alamat     : %-25s ||\n", plg.alamat);
-	fprintf(st, "|| Waktu sewa : %-25d ||\n", plg.tanggal);
-	fprintf(st, "|| Biaya +    : %-25d ||\n", plg.tambah_game);
+	fprintf(st, "|| Waktu sewa : %-21d jam ||\n", plg.jam);
+	fprintf(st, "|| Biaya game : %-25d ||\n", plg.tambah_game);
 	fprintf(st, "|| Total bayar: %-25d ||\n", plg.bayar);
 	fprintf(st, "============================================\n");
-	fprintf(fi, "%d, %s, %s, %s, %d, %d, %d", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.tanggal, plg.tambah_game, plg.bayar);
+	fprintf(fi, "\n%d, %s, %s, %s, %d, %d, %d", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.jam, plg.tambah_game, plg.bayar);
 	fclose(st);
 	fclose(fi);
 	i=0;
