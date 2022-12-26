@@ -17,7 +17,6 @@
 struct regis{   //Struct untuk registrasi dan login pelanggan
 	char nama[15];
 	char alamat[20];
-	char email[50];
 	char username[100];
 	char password[100];
 } r;
@@ -269,7 +268,7 @@ void pelanggan(){
         //     }
         // }while(!feof(log));
 	
-	    while(fscanf(log,"%s %s %s %s %s \n", r.nama,r.alamat,r.email,r.username,r.password)!=EOF){
+	    while(fscanf(log,"%14[^,],%19[^,],%99[^,],%99[^\n]\n", r.nama,r.alamat,r.username,r.password)!=EOF){
 	        if(strcmp(username,r.username)==0  ){
 	            if(strcmp(password,r.password)==0){
 	                check =1;
