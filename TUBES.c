@@ -214,8 +214,8 @@ void pelanggan(){
 	if(menu==1){
 		FILE *reg;
 		reg=fopen("Registrasi_pelanggan.txt", "a+");
-        // FILE *fs;
-        // fs=fopen("info_pengguna.txt","a+");
+        FILE *fs;
+        fs=fopen("info_pengguna.txt","a+");
 		printf("Masukkan nama anda :");
 		scanf(" %s", &r.nama);
 		printf("Masukkan alamat anda : ");
@@ -234,9 +234,10 @@ void pelanggan(){
 		fprintf(reg, "|| Username : %-27s ||\n", r.username);
 		fprintf(reg, "|| Password : %-27s ||\n", r.password);
 		fprintf(reg, "============================================\n");
-		// fprintf(fs,"%s,%s,%s,%s",r.nama,r.alamat,r.username,r.password);
+		fprintf(fs,"%s,%s,%s,%s",r.nama,r.alamat,r.username,r.password);
 		fclose(reg);
-		printf("Klik apapun untuk melanjutkan program\n");
+        fclose(fs);
+        printf("Klik apapun untuk melanjutkan program\n");
 		getch();
 		pelanggan();
 	}if(menu==2){
@@ -252,10 +253,20 @@ void pelanggan(){
 	    printf("passworrd : ");
 	    scanf("%s", &password);
         // do{
-        //     int cek = fscanf(log,"%99[^,],%99[^\n]\n",username,password);
-            // if(cek==2){
-            //     printf()
-            // }
+        //     int cek = fscanf(log,"%99[^,],%254[^\n]\n",username,password);
+        //     if(cek==2){
+        //         if(strcmp(username,r.username)==0){
+        //             if(strcmp(password,r.password)==0){
+        //                 printf("Login sukses \n");
+        //                 system("cls");
+        //                 menu2();
+        //                 break;
+        //             }
+        //         }else{
+        //             printf("login gagal\n");
+        //         }
+                
+        //     }
         // }while(!feof(log));
 	
 	    while(fscanf(log,"%s %s %s %s %s \n", r.nama,r.alamat,r.email,r.username,r.password)!=EOF){
@@ -270,7 +281,10 @@ void pelanggan(){
 	        }
 	    }
 	    if(!check){
-	        printf("error\n");
+            printf("+===================================+\n");
+	        printf("|             ERROR !               |\n");
+            printf("|   tekan apapun untuk kembali !    |\n");
+            printf("====================================+\n");
 	        getch();
 	        system("cls");
 	        pelanggan();
@@ -909,7 +923,7 @@ void request(){
 	        fflush(stdin);
 	    }
         printf("\n+==================================================+\n");
-        printf("Konfirmasi Game yang ingin ditambahkan \n\n")
+        printf("Konfirmasi Game yang ingin ditambahkan \n\n");
 	    for(j=0;j<i;j++){
 	        printf("%d. %s\n", (j+1),game[j]);
 	    }
