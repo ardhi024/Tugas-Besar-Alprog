@@ -49,6 +49,7 @@ void keluar();
 void menu2();
 int validasi(int *input);
 void timer();
+void stok();
 void struk();
 
 //Deklarasi Variabel global
@@ -56,7 +57,7 @@ int menu,menu;
 
 // Fungsi Main
 int main(){
-	char usr[5], pas[8];
+	char usr[50], pas[50];
 	int status = 0, salah = 0;
 
     do{    
@@ -86,16 +87,24 @@ int main(){
 			   	while(status < 3){
 			   		printf("Masukkan Username : ");
 			      	scanf("%s", &usr);
+			      	printf("-------------------------------------\n");
 					printf("Masukkan Password : ");
 			      	scanf("%s", &pas);
+			      	printf("-------------------------------------\n");
 			      	if(strcmp(usr, "admin")==0 && strcmp (pas, "admin321")== 0){
-			        	printf("Akses diterima\n");
+			        	printf("+=================+\n");
+            			printf("|  Akses Diterima |\n");
+            			printf("+=================+\n");
 			        	break;
 			      	}else{
-						printf("Username atau Password salah\n");
+			      		printf("+===================================+\n");
+            			printf("|  Username atau Password Salah!!!  |\n");
+            			printf("+===================================+\n");
 			        	salah++;
 			        	if(salah == 3){
-			            	printf("Akses ditolak\n");
+			            	printf("+=================+\n");
+            				printf("|  Akses Ditolak  |\n");
+            				printf("+=================+\n");
 			            	system("cls");
 			            	main();
 			        	}
@@ -125,7 +134,7 @@ int main(){
 
 //Prosedur Menu Admin 
 void admin(){
-	char usr[5], pas[8];
+	char usr[50], pas[50];
 	int status = 0, salah = 0;
     do{
         system("cls");
@@ -198,8 +207,9 @@ void pelanggan(){
         printf("============================================\n");
   
         printf("============================================\n");
-        printf("// Masukkan pilihan anda : ");
+        printf("Masukkan pilihan anda : ");
         validasi(&menu);
+        printf("\n===========================================\n");
         if(menu<0 || menu>3){
 
             printf("+=================+\n");
@@ -215,16 +225,23 @@ void pelanggan(){
 		reg=fopen("Registrasi_pelanggan.txt", "a+");
         FILE *fs;
         fs=fopen("info_pengguna.txt","a+");
+        printf("===========================================\n");
 		printf("Masukkan nama anda :");
 		scanf(" %s", &r.nama);
+		printf("===========================================\n");
 		printf("Masukkan alamat anda : ");
 		scanf(" %s", &r.alamat);
+		printf("===========================================\n");
 		printf("Masukkan username anda : ");
 		scanf(" %s", &r.username);
+		printf("===========================================\n");
 		printf("Masukkan password anda : ");
 		scanf(" %s", &r.password);
-		printf("Akun berhasil dibuat\n");
-		printf("Catatan : Username dan Password jangan sampai lupa!!\n");
+		printf("===========================================\n");
+		printf("+======================================================+\n");
+        printf("|                   Akun Berhasil Dbuat                |\n");
+        printf("|  Catatan : Username dan Password jangan sampai lupa  |\n");
+        printf("+======================================================+\n");
 		fprintf(reg, "============================================\n");     //mencetak data pengguna ke file txt
 		fprintf(reg, "||           REGISTRASI PENGGUNA          ||\n");
 		fprintf(reg, "============================================\n");
@@ -249,30 +266,19 @@ void pelanggan(){
 	
 	    printf("username : ");
 	    scanf("%s", &username);
+	    printf("===========================================\n");
 	    printf("passworrd : ");
-	    scanf("%s", &password);
-        // do{
-        //     int cek = fscanf(log,"%99[^,],%254[^\n]\n",username,password);
-        //     if(cek==2){
-        //         if(strcmp(username,r.username)==0){
-        //             if(strcmp(password,r.password)==0){
-        //                 printf("Login sukses \n");
-        //                 system("cls");
-        //                 menu2();
-        //                 break;
-        //             }
-        //         }else{
-        //             printf("login gagal\n");
-        //         }
-                
-        //     }
-        // }while(!feof(log));
-	
+	    scanf("%s", &password);	
+	    printf("===========================================\n");
 	    while(fscanf(log,"%14[^,],%19[^,],%99[^,],%99[^\n]\n", r.nama,r.alamat,r.username,r.password)!=EOF){
 	        if(strcmp(username,r.username)==0  ){
 	            if(strcmp(password,r.password)==0){
 	                check =1;
-	                printf("login succes\n");
+	                printf("+===================================+\n");
+	        		printf("|          Login Success            |\n");
+            		printf("|   tekan apapun untuk lanjut !     |\n");
+            		printf("+===================================+\n");
+            		getch();
 	                system("cls");
 	                menu2();
 	                break;
@@ -283,7 +289,7 @@ void pelanggan(){
             printf("+===================================+\n");
 	        printf("|             ERROR !               |\n");
             printf("|   tekan apapun untuk kembali !    |\n");
-            printf("====================================+\n");
+            printf("+===================================+\n");
 	        getch();
 	        system("cls");
 	        pelanggan();
@@ -309,13 +315,15 @@ void menu2(){
         printf("============================================\n");
         printf("|| 1. Lihat Daftar Game                   ||\n");
         printf("|| 2. Rental PS                           ||\n");
-        printf("|| 3. Kembali                             ||\n");
+        printf("|| 3. Lihat Stok ps                       ||\n");
+        printf("|| 4. Kembali                             ||\n");
         printf("|| 0. Keluar                              ||\n");
         printf("============================================\n");
     
         printf("Masukkan pilihan anda : ");
         validasi(&menu);
-        if(menu<0 || menu>3){
+        printf("\n===========================================\n");
+        if(menu<0 || menu>4){
 
             printf("+=================+\n");
             printf("|  input salah!!  |\n");
@@ -323,7 +331,7 @@ void menu2(){
             system("pause");
         }
         fflush(stdin);
-    }while(menu<0 || menu>3);
+    }while(menu<0 || menu>4);
 	
 	if(menu==1){
 		system("cls");
@@ -342,6 +350,7 @@ void menu2(){
         
             printf("Masukkan menu : ");
             validasi(&menu);
+            printf("\n===========================================\n");
             if(menu<0 || menu>4){
                 printf("+=================+\n");
                 printf("|  input salah!!  |\n");
@@ -361,9 +370,13 @@ void menu2(){
 	}
 
     if(menu==3){
-        system("cls");
-        pelanggan();
+//      system("cls");
+        stok();
     }
+    if(menu==4){
+    	system("cls");
+    	pelanggan();
+	}
     if(menu==0){
         system("cls");
         keluar();
@@ -385,6 +398,7 @@ void ps(){
    
         printf("Masukkan menu : ");
 	    validasi(&menu);
+	    printf("===========================================\n");
         if(menu<0 || menu>4){
             printf("+=================+\n");
             printf("|  input salah!!  |\n");
@@ -410,6 +424,7 @@ void ps(){
                 
                     printf("Masukkan kode  : ");
                     validasi(&menu);
+                    printf("\n===========================================\n");
                     if(menu==4){
                         system("cls");
                         ps();
@@ -802,14 +817,14 @@ void ps(){
 			
 			break;
 //		case 4 :
-//			if(admin()==menu){
+//			if(admin()==4){
 //				admin();
 //			}else{
 //				pelaggan();
 //			}
-//		case 0 :
-//			keluar();
-//			break;
+		case 0 :
+			keluar();
+			break;
 		}
 	}
 
@@ -817,8 +832,8 @@ void ps(){
 void timer(){
 	int h=0, j=0, m=0, d=0, i;
 	if(i==0){
-		j=plg.tanggal;
-		m=0;
+		m=plg.tanggal;
+		j=0;
 		d=0;
 		printf("\n===========\n");
 		while(1){
@@ -835,6 +850,8 @@ void timer(){
 				d=59;
 			}else if(j==0 && m==0 && d==0){
 				Beep(800,300);
+				getch();
+				system("cls");
 				tambah_sewa();
 			}
 		}
@@ -849,15 +866,21 @@ void timer(){
 void pembayaranps3(){
 	printf("Masukkan kode ps (31-33) : ");
 	scanf("%d", &plg.kode);
+	printf("===========================================\n");
 	printf("Nama Pelanggan : ");
 	scanf(" %[^\n]%*c", &plg.nama);
+	printf("===========================================\n");
 	printf("Masukkan no_hp : ");
 	scanf(" %[^\n]%*c", &plg.no_hp);
+	printf("===========================================\n");
 	printf("Masukkan alamat : ");
 	scanf(" %[^\n]%*c", &plg.alamat);
+	printf("===========================================\n");
 	printf("Masukkan lama peminjaman (jam) : ");
 	scanf("%d", &plg.tanggal);
+	printf("===========================================\n");
 	request();
+	getch();
 	plg.bayar = plg.tanggal * ps3 + plg.tambah_game;
 	struk();
 }
@@ -866,15 +889,21 @@ void pembayaranps3(){
 void pembayaranps4(){
 	printf("Masukkan kode ps (41-43) : ");
 	scanf("%d", &plg.kode);
+	printf("===========================================\n");
 	printf("Nama Pelanggan : ");
 	scanf(" %[^\n]%*c", &plg.nama);
+	printf("===========================================\n");
 	printf("Masukkan no_hp : ");
 	scanf(" %[^\n]%*c", &plg.no_hp);
+	printf("===========================================\n");
 	printf("Masukkan alamat : ");
 	scanf(" %[^\n]%*c", &plg.alamat);
+	printf("===========================================\n");
 	printf("Masukkan lama peminjaman (jam) : ");
 	scanf("%d", &plg.tanggal);
+	printf("===========================================\n");
 	request();
+	getch();
 	plg.bayar = plg.tanggal * ps4 + plg.tambah_game;
 	struk();
 }
@@ -883,14 +912,19 @@ void pembayaranps4(){
 void pembayaranps5(){
 	printf("Masukkan kode ps (51-53) : ");
 	scanf("%d", &plg.kode);
+	printf("===========================================\n");
 	printf("Nama Pelanggan : ");
 	scanf(" %[^\n]%*c", &plg.nama);
+	printf("===========================================\n");
 	printf("Masukkan no_hp : ");
 	scanf(" %[^\n]%*c", &plg.no_hp);
+	printf("===========================================\n");
 	printf("Masukkan alamat : ");
 	scanf(" %[^\n]%*c", &plg.alamat);
+	printf("===========================================\n");
 	printf("Masukkan lama peminjaman (jam) : ");
 	scanf("%d", &plg.tanggal);
+	printf("===========================================\n");
 	request();
 	getch();
 	plg.bayar = plg.tanggal * ps5 + plg.tambah_game;
@@ -906,22 +940,22 @@ void request(){
     printf("+==================================================+\n");   //tampilan menu untuk tambah game
     printf("|                   TAMBAH GAME                    |\n");
     printf("+==================================================+\n");
-    printf("|  Ingin merequest game (y/t) ? : ");
+    printf(" Ingin merequest game (y/t) ? : ");
     scanf(" %c", &pilih);
     if(pilih=='y'){  
         printf("+==================================================+\n");  	
 	    printf("| Penambahan game akan dikenakan 2000 per game     |\n");
-	    printf("| ketik jumlah game yang akan ditambahkan :         ");
+	    printf("| ketik jumlah game yang akan ditambahkan : ");
 	    scanf("%d", &i);
 	    fflush(stdin);
 
-        printf("\n+==================================================+\n");
+        printf("+==================================================+\n");
 	    printf("input game : \n");
 	    for(j=0;j<i;j++){
 	        scanf("%[^\n]%*c",&game[j]);
 	        fflush(stdin);
 	    }
-        printf("\n+==================================================+\n");
+        printf("+==================================================+\n");
         printf("Konfirmasi Game yang ingin ditambahkan \n\n");
 	    for(j=0;j<i;j++){
 	        printf("%d. %s\n", (j+1),game[j]);
@@ -929,34 +963,78 @@ void request(){
 	    plg.tambah_game = i * 2000;
 //	    printf("total biaya tambah game : %d", tambah_game);
 	}else if(pilih=='t'){
-        printf("+================================+\n");
-		printf("| Data terkirim                   \n");
-		printf("| Klik apapun untuk melihat waktu \n");
-        printf("+================================+\n");
+        printf("+=================================+\n");
+		printf("|          Data terkirim          |\n");
+		printf("| Klik apapun untuk melihat waktu |\n");
+        printf("+=================================+\n");
 	}
 }
 
 //Prosedur untuk Tambah waktu sewa
 void tambah_sewa(){
 	char menu_sewa;
-    printf("+==================================+\n");   //tampilan menu untuk tambah sewa
-	printf("Ingin menambah waktu sewa (y/t)? :    ");
-    printf("+==================================+\n");
+	FILE * sewa;
+	sewa=fopen("Data Pelanggan.txt", "a");
+    printf("\n+==================================+\n");   //tampilan menu untuk tambah sewa
+	printf("| Ingin menambah waktu sewa (y/t)? : ");
 	scanf(" %c", &menu_sewa);
+	printf("+==================================+\n");
 	if(menu_sewa=='y'){
-        printf("+==============================+\n");
+        printf("===========================================\n");
 		printf("Masukkan kode ps : ");
 		scanf("%d", &tb.kode);
+		printf("===========================================\n");
 		printf("Masukkan nama : ");
 		scanf(" %[^\n]%*c", &tb.nama);
+		printf("===========================================\n");
 		printf("Masukkan tambahan waktu (jam) : ");
 		scanf("%d", &tb.tambah_waktu);
+		printf("===========================================\n");
 		plg.tambah_sewa = tb.tambah_waktu * 3000 + plg.bayar;
-        printf("+==============================+\n");
-		printf("Total bayar : %d ", plg.tambah_sewa);
+		fprintf(sewa, "============================================\n");  //tamplan yang akan di cetak ke struk penyewaan dalam file txt
+		fprintf(sewa, "||           STRUCT TOTAL BAYAR           ||\n");
+		fprintf(sewa, "============================================\n");
+		fprintf(sewa, "|| Kode PS       : %-22d ||\n", plg.kode);
+		fprintf(sewa, "|| Nama          : %-22s ||\n", plg.nama);
+		fprintf(sewa, "|| No Hp         : %-22s ||\n", plg.no_hp);
+		fprintf(sewa, "|| Alamat        : %-22s ||\n", plg.alamat);
+		fprintf(sewa, "|| Waktu sewa    : %-18d jam ||\n", plg.tanggal);
+		fprintf(sewa, "|| Biaya game    : %-22d ||\n", plg.tambah_game);
+		fprintf(sewa, "|| Biaya rental  : %-22d ||\n", plg.bayar);
+		fprintf(sewa, "|| Biaya nambah  : %-22d ||\n", tb.tambah_waktu);
+		fprintf(sewa, "|| Total bayar   : %-22d ||\n", plg.tambah_sewa);
+		fprintf(sewa, "============================================\n");
+		fclose(sewa);
+		timer();
 	}else {
 		keluar();
 	}
+}
+
+void stok(){
+	int kode, i, check=0;
+	FILE * cek;
+	cek=fopen("Info pelanggan", "r");
+	printf("Masukkan kode ps : ");
+	scanf("%d", &kode);
+	printf("List kode PS\n");
+	printf("31[]  32[]  33[]\n41[]  42[]  43[]\n51[]  52[]  53[]");
+	while(fscanf(cek,"\n%d, %s, %s, %s, %d, %d, %d", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.tanggal, plg.tambah_game, plg.bayar)!=EOF){
+	    if(kode==plg.kode){
+	        check =1;
+	        printf("\nPS dengan Kode %d masih digunakan selama %d jam\n", plg.kode, plg.tanggal);
+	        printf("\nSilakan cek kode yang lain");
+	        getch();
+	        stok();
+	        break;          	        	
+	    }else{
+	       	printf("\nPS tersedia, silkanan pesan");
+	       	getch();
+	       	pelanggan();
+	       	break;
+		}
+	}
+	fclose(cek);
 }
 
 //Prosedur Struk Transaksi 
@@ -964,6 +1042,8 @@ void struk(){
 	int i;
 	FILE * st;
 	st=fopen("Data Pelanggan.txt", "a");
+	FILE *fi;
+	fi=fopen("Info pelanggan.txt", "a");
 	fprintf(st, "============================================\n");  //tamplan yang akan di cetak ke struk penyewaan dalam file txt
 	fprintf(st, "||            STRUCT PEMBAYARAN           ||\n");
 	fprintf(st, "============================================\n");
@@ -975,7 +1055,9 @@ void struk(){
 	fprintf(st, "|| Biaya +    : %-25d ||\n", plg.tambah_game);
 	fprintf(st, "|| Total bayar: %-25d ||\n", plg.bayar);
 	fprintf(st, "============================================\n");
+	fprintf(fi, "%d, %s, %s, %s, %d, %d, %d", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.tanggal, plg.tambah_game, plg.bayar);
 	fclose(st);
+	fclose(fi);
 	i=0;
 	timer();
 }
@@ -987,7 +1069,8 @@ void keluar(){
 	printf("=========================================\n");
 	printf("||     Terimakasih sudah berkunjung    ||\n");
 	printf("||     Semoga harimu menyenangkan :)   ||\n");
-	printf("=========================================\n");	
+	printf("=========================================\n");
+	exit(0);
 }
 
 //Fungsi Validasi Input
