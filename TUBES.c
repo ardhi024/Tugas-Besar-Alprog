@@ -234,7 +234,7 @@ void pelanggan(){
 		fprintf(reg, "|| Username : %-27s ||\n", r.username);
 		fprintf(reg, "|| Password : %-27s ||\n", r.password);
 		fprintf(reg, "============================================\n");
-		fprintf(fs,"%s,%s,%s,%s",r.nama,r.alamat,r.username,r.password);
+		fprintf(fs,"%s,%s,%s,%s\n",r.nama,r.alamat,r.username,r.password);
 		fclose(reg);
         fclose(fs);
         printf("Klik apapun untuk melanjutkan program\n");
