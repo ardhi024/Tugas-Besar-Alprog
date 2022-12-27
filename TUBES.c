@@ -22,7 +22,7 @@ struct regis{   //Struct untuk registrasi dan login pelanggan
 } r;
 struct pelanggan{   //Struct untuk transaksi penyewaan PS
 	char nama[30];
-	char no_hp[13];
+	char no_hp[16];
 	char alamat[100];
 	int jam;
 	int bayar;
@@ -1030,7 +1030,7 @@ void stok(){
 	printf("===========================================\n");
 	FILE * cek;
 	cek=fopen("Info pelanggan.txt", "r");
-	while(fscanf(cek,"%d, %s, %s, %s, %d, %d, %d\n", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.jam, plg.tambah_game, plg.bayar)!=EOF){
+	while(fscanf(cek,"%[^,], %29[^,], %15[^,], %99[^,], %[^,], %[^,], %[^\n]\n", plg.kode, plg.nama, plg.no_hp, plg.alamat, plg.jam, plg.tambah_game, plg.bayar)!=EOF){
 	    if(kode==plg.kode){
 	        check=1;
 	        printf("=======================================================\n");
@@ -1056,9 +1056,9 @@ void stok(){
 void struk(){
 	int i;
 	FILE * st;
-	st=fopen("Data Pelanggan.txt", "a");
+	st=fopen("Data Pelanggan.txt", "a+");
 	FILE *fi;
-	fi=fopen("Info pelanggan.txt", "a");
+	fi=fopen("Info pelanggan.txt", "a+");
 	fprintf(st, "============================================\n");  //tamplan yang akan di cetak ke struk penyewaan dalam file txt
 	fprintf(st, "||            STRUCT PEMBAYARAN           ||\n");
 	fprintf(st, "============================================\n");
