@@ -51,6 +51,7 @@ int validasi(int *input);
 void timer();
 void stok();
 void struk();
+void pulang();
 
 //Deklarasi Variabel global
 int menu,menu;
@@ -339,6 +340,22 @@ void menu2(){
 		ps();
 	}else if(menu==2){
         do{
+			do{
+				printf("+================================+\n");
+				printf("| 1. sewa di sini                |\n");
+				printf("| 2. Bawa pulang                 |\n");
+				printf("| 0. Kembali                    |\n");
+				printf("+================================+\n");
+				printf("Masukkan menu : ");
+				validasi(&menu);
+			}while(menu<0 || menu>2);
+			
+			if(menu==2){
+				pulang();
+			}
+			if(menu==0){
+				menu2();
+			}
             system("cls");
             printf("+================================+\n"); //menu pilihan jenis PS yang tersedia
             printf("|        JENIS PLAYSTATION       |\n");
@@ -945,7 +962,36 @@ void request(){
     printf("+==================================================+\n");
     printf(" Ingin merequest game (y/t) ? : ");
     scanf(" %c", &pilih);
-    if(pilih=='y'){  
+    if(pilih=='y'){
+		printf("+==================================================+\n");
+		printf("|      Daftar Game yang bisa ditambah              |\n");
+		printf("|==================================================|\n");
+		printf("| 1.  Assassin's Creed Valhalla                    |\n");
+		printf("| 2.  Cyberpunk 2077                               |\n");
+		printf("| 3.  The Crew® 2                                  |\n");
+		printf("| 4.  The Sims™ 4                                  |\n");
+		printf("| 5.  EA SPORTS™ FIFA 23 Standard Edition PS4™     |\n");
+		printf("| 6.  Resident Evil Village                        |\n");
+		printf("| 7.  Horizon Zero Dawn™                           |\n");
+		printf("| 8.  The Last of Us™ Remastered                   |\n");
+		printf("| 9.  Hello Neighbor                               |\n");
+		printf("| 10. Watch Dogs: Legion                           |\n");
+		printf("| 11. Dead by Daylight                             |\n");
+		printf("| 12. God of War Ragnarök                          |\n");
+		printf("| 13. Metro Exodus                                 |\n");
+		printf("| 14. Nier: Automata                               |\n");
+		printf("| 15. Monster Hunter World                         |\n");
+		printf("| 16. Apex Legends                                 |\n");
+		printf("| 17. Yakuza 0                                     |\n");
+		printf("| 18. Tetris Effect                                |\n");
+		printf("| 19. Dreams                                       |\n");
+		printf("| 20. Final Fantasy 7 Remake                       |\n");
+		printf("| 21. Overwatch                                    |\n");
+		printf("| 22. Ratchet & Clank                              |\n");
+		printf("| 23. What Remains of Edith Finch                  |\n");
+		printf("| 24. Uncharted 4: A Thief's End                   |\n");
+		printf("| 25. Metal Gear Solid V: The Phantom Pain         |\n");
+		printf("+--------------------------------------------------+\n");  
         printf("+==================================================+\n");  	
 	    printf("| Penambahan game akan dikenakan 2000 per game     |\n");
 	    printf("| ketik jumlah game yang akan ditambahkan : ");
@@ -1075,6 +1121,36 @@ void struk(){
 	fclose(fi);
 	i=0;
 	timer();
+}
+
+void pulang(){
+	system("cls");
+	printf("=========================================\n");
+	printf("||          Sewa PS bawa Pulang        ||\n");
+	printf("=========================================\n");
+	printf("||   Dibawa pulang sewa minimal 6 jam  ||\n");
+	printf("=========================================\n\n");
+	do{
+		printf("+================================+\n"); //menu pilihan jenis PS yang tersedia
+		printf("|        JENIS PLAYSTATION       |\n");
+		printf("|================================|\n");
+		printf("|  1. PS3  |  2. PS4  |  3. PS5  |\n");
+		printf("|================================|\n");
+		printf("|  4. Kembali                    |\n");
+		printf("|  0. Keluar                     |\n");
+		printf("+================================+\n");
+
+		printf("Masukkan menu : ");
+		validasi(&menu);
+	}while(menu<0 || menu>4);
+	if(menu==1){
+		pembayaranps3();
+	}else if(menu==2){
+		pembayaranps4();
+	}else if(menu==3){
+		pembayaranps5();
+	}
+	
 }
 
 // Prosedur Pesan keluar Program
